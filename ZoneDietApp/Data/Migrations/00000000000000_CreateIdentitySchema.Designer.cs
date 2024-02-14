@@ -9,7 +9,7 @@ using ZoneDietApp.Data;
 
 namespace ZoneDietApp.Data.Migrations
 {
-	[DbContext(typeof(ApplicationDbContext))]
+	[DbContext(typeof(ZoneDbContext))]
 	[Migration("00000000000000_CreateIdentitySchema")]
 	partial class CreateIdentitySchema
 	{

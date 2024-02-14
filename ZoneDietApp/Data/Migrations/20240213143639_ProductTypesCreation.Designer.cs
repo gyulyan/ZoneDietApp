@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZoneDietApp.Data;
 
@@ -11,9 +12,10 @@ using ZoneDietApp.Data;
 namespace ZoneDietApp.Data.Migrations
 {
     [DbContext(typeof(ZoneDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240213143639_ProductTypesCreation")]
+    partial class ProductTypesCreation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,72 +226,6 @@ namespace ZoneDietApp.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ZoneDietApp.Data.Models.Product", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("TypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Weight")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ZoneChoiceColorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TypeId");
-
-                    b.HasIndex("ZoneChoiceColorId");
-
-                    b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Заешко месо",
-                            TypeId = 3,
-                            Weight = "0.028",
-                            ZoneChoiceColorId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Алабаш",
-                            TypeId = 1,
-                            Weight = "0.300",
-                            ZoneChoiceColorId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Авокадо",
-                            TypeId = 2,
-                            Weight = "0.010",
-                            ZoneChoiceColorId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Кисело мляко",
-                            TypeId = 4,
-                            Weight = "0.220",
-                            ZoneChoiceColorId = 1
-                        });
-                });
-
             modelBuilder.Entity("ZoneDietApp.Data.Models.ProductTypeOption", b =>
                 {
                     b.Property<int>("Id")
@@ -325,41 +261,7 @@ namespace ZoneDietApp.Data.Migrations
                         new
                         {
                             Id = 4,
-                            Name = "Смесени продукти"
-                        });
-                });
-
-            modelBuilder.Entity("ZoneDietApp.Data.Models.ZoneChoiceColor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ZoneChoiceColors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Зелен"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Оранжев"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Червен"
+                            Name = "Комбиниран"
                         });
                 });
 
@@ -412,25 +314,6 @@ namespace ZoneDietApp.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ZoneDietApp.Data.Models.Product", b =>
-                {
-                    b.HasOne("ZoneDietApp.Data.Models.ProductTypeOption", "Type")
-                        .WithMany()
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ZoneDietApp.Data.Models.ZoneChoiceColor", "ZoneChoiceColor")
-                        .WithMany()
-                        .HasForeignKey("ZoneChoiceColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Type");
-
-                    b.Navigation("ZoneChoiceColor");
                 });
 #pragma warning restore 612, 618
         }

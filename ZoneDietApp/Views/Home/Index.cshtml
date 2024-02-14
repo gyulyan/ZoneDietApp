@@ -2,7 +2,83 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+@* <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+</div> *@
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .tabs {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: space-around;
+            background-color: #f0f0f0;
+        }
+        .tabs li {
+            padding: 10px 20px;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+        }
+        .tabs li:hover {
+            border-bottom: 2px solid #007bff;
+        }
+        .content {
+            display: none;
+            padding: 20px;
+        }
+        .content.active {
+            display: block;
+        }
+    </style>
+
+<body>
+    <ul class="tabs">
+        <li onclick="showContent('home')">Начало</li>
+        <li onclick="showContent('zone')">Какво е "Зоната"</li>
+        <li onclick="showContent('daily')">Калкулатор за дневен прием</li>
+        <li onclick="showContent('label')">Калкулатор за смятане по етикет</li>
+        <li onclick="showContent('products')">Таблица с продукти</li>
+        <li onclick="showContent('recipes')">Рецепти</li>
+    </ul>
+
+    <div id="home" class="content active">
+        <h2>Добре дошли на началната страница</h2>
+        <!-- Content for "Начало" tab goes here -->
+    </div>
+    <div id="zone" class="content">
+        <h2>Какво е "Зоната"</h2>
+        <!-- Content for "Какво е 'Зоната'" tab goes here -->
+    </div>
+    <div id="daily" class="content">
+        <h2>Калкулатор за дневен прием</h2>
+        <!-- Content for "Калкулатор за дневен прием" tab goes here -->
+    </div>
+    <div id="label" class="content">
+        <h2>Калкулатор за смятане по етикет</h2>
+        <!-- Content for "Калкулатор за смятане по етикет" tab goes here -->
+    </div>
+    <div id="products" class="content">
+        <h2>Таблица с продукти</h2>
+        <!-- Content for "Таблица с продукти" tab goes here -->
+    </div>
+    <div id="recipes" class="content">
+        <h2>Рецепти</h2>
+        <!-- Content for "Рецепти" tab goes here -->
+    </div>
+
+    <script>
+        function showContent(tabId) {
+            const contents = document.querySelectorAll('.content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
+</body>

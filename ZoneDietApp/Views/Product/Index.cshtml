@@ -1,0 +1,48 @@
+﻿@model ProductIndexViewModel
+
+@{
+    ViewData["Title"] = "Product Index";
+}
+<h1>Таблица с продукти</h1>
+
+@using (Html.BeginForm("Index", "Product", FormMethod.Get))
+{
+    <div class="form-group">
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" name="productName" class="form-control" required autocomplete="on" list="productList">
+        <datalist id="productList">
+            @foreach (var product in Model.Products)
+            {
+                <option value="@product.Name"></option>
+            }
+        </datalist>
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+}
+
+@if (Model.Products != null && Model.Products.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Weight</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Type.Name</td>
+                    <td>@product.Weight</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No products found.</p>
+}
