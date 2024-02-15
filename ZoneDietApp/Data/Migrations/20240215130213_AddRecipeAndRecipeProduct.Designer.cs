@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZoneDietApp.Data;
 
@@ -11,9 +12,10 @@ using ZoneDietApp.Data;
 namespace ZoneDietApp.Data.Migrations
 {
     [DbContext(typeof(ZoneDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240215130213_AddRecipeAndRecipeProduct")]
+    partial class AddRecipeAndRecipeProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,9 +243,6 @@ namespace ZoneDietApp.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("RecipeId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TypeId")
                         .HasColumnType("int");
 
@@ -255,8 +254,6 @@ namespace ZoneDietApp.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RecipeId");
 
                     b.HasIndex("TypeId");
 
@@ -371,15 +368,6 @@ namespace ZoneDietApp.Data.Migrations
                     b.Property<int>("RecipeTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TotalCarbohydrat")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalFat")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalProtein")
-                        .HasColumnType("int");
-
                     b.Property<int>("TotalTime")
                         .HasColumnType("int");
 
@@ -447,8 +435,13 @@ namespace ZoneDietApp.Data.Migrations
                 {
                     b.HasBaseType("ZoneDietApp.Data.Models.Product");
 
+                    b.Property<int?>("RecipeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TypeQuantity")
                         .HasColumnType("int");
+
+                    b.HasIndex("RecipeId");
 
                     b.HasDiscriminator().HasValue("RecipeProduct");
                 });
@@ -506,10 +499,6 @@ namespace ZoneDietApp.Data.Migrations
 
             modelBuilder.Entity("ZoneDietApp.Data.Models.Product", b =>
                 {
-                    b.HasOne("ZoneDietApp.Data.Models.Recipe", null)
-                        .WithMany("Ingredients")
-                        .HasForeignKey("RecipeId");
-
                     b.HasOne("ZoneDietApp.Data.Models.ProductTypeOption", "Type")
                         .WithMany()
                         .HasForeignKey("TypeId")
@@ -544,6 +533,13 @@ namespace ZoneDietApp.Data.Migrations
                     b.Navigation("Creator");
 
                     b.Navigation("RecipeType");
+                });
+
+            modelBuilder.Entity("ZoneDietApp.Data.Models.RecipeProduct", b =>
+                {
+                    b.HasOne("ZoneDietApp.Data.Models.Recipe", null)
+                        .WithMany("Ingredients")
+                        .HasForeignKey("RecipeId");
                 });
 
             modelBuilder.Entity("ZoneDietApp.Data.Models.Recipe", b =>
