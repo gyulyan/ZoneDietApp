@@ -56,5 +56,8 @@ namespace ZoneDietApp.Data.Models
         [Required]
         [Range(0, 50)]
         public int TotalProtein { get; set; }
+
+        [Required]
+        public DateTime CreatedOn { get; set; }
     }
 }

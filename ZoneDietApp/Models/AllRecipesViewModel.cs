@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using ZoneDietApp.Data;
+using ZoneDietApp.Data.Models;
 
 namespace ZoneDietApp.Models
 {
@@ -10,6 +12,12 @@ namespace ZoneDietApp.Models
         public string Name { get; set; } = null!;
 
         public int TotalCarbohydrat { get; set; }
+
+        public int TotalTime { get; set; }
+
+        public RecipeType RecipeType { get; set; } = null!;
+
+        public string Creator { get; set; } = null!;
 
         public int TotalFat { get; set; }
 

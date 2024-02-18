@@ -29,5 +29,5 @@ namespace ZoneDietApp.Data.Models
 
 		[Required]
 		public string Weight { get; set; }
-	}
+    }
 }

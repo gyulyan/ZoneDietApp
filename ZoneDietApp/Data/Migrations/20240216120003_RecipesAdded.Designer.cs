@@ -12,8 +12,8 @@ using ZoneDietApp.Data;
 namespace ZoneDietApp.Data.Migrations
 {
     [DbContext(typeof(ZoneDbContext))]
-    [Migration("20240215130213_AddRecipeAndRecipeProduct")]
-    partial class AddRecipeAndRecipeProduct
+    [Migration("20240216120003_RecipesAdded")]
+    partial class RecipesAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -234,14 +234,13 @@ namespace ZoneDietApp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("RecipeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("TypeId")
                         .HasColumnType("int");
@@ -255,13 +254,13 @@ namespace ZoneDietApp.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RecipeId");
+
                     b.HasIndex("TypeId");
 
                     b.HasIndex("ZoneChoiceColorId");
 
                     b.ToTable("Products");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Product");
 
                     b.HasData(
                         new
@@ -368,6 +367,15 @@ namespace ZoneDietApp.Data.Migrations
                     b.Property<int>("RecipeTypeId")
                         .HasColumnType("int");
 
+                    b.Property<int>("TotalCarbohydrat")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalFat")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalProtein")
+                        .HasColumnType("int");
+
                     b.Property<int>("TotalTime")
                         .HasColumnType("int");
 
@@ -378,6 +386,41 @@ namespace ZoneDietApp.Data.Migrations
                     b.HasIndex("RecipeTypeId");
 
                     b.ToTable("Recipes");
+                });
+
+            modelBuilder.Entity("ZoneDietApp.Data.Models.RecipeProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TypeQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Weight")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ZoneChoiceColorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypeId");
+
+                    b.HasIndex("ZoneChoiceColorId");
+
+                    b.ToTable("RecipeProducts");
                 });
 
             modelBuilder.Entity("ZoneDietApp.Data.Models.RecipeType", b =>
@@ -429,21 +472,6 @@ namespace ZoneDietApp.Data.Migrations
                             Id = 3,
                             Name = "Червен"
                         });
-                });
-
-            modelBuilder.Entity("ZoneDietApp.Data.Models.RecipeProduct", b =>
-                {
-                    b.HasBaseType("ZoneDietApp.Data.Models.Product");
-
-                    b.Property<int?>("RecipeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TypeQuantity")
-                        .HasColumnType("int");
-
-                    b.HasIndex("RecipeId");
-
-                    b.HasDiscriminator().HasValue("RecipeProduct");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -499,6 +527,10 @@ namespace ZoneDietApp.Data.Migrations
 
             modelBuilder.Entity("ZoneDietApp.Data.Models.Product", b =>
                 {
+                    b.HasOne("ZoneDietApp.Data.Models.Recipe", null)
+                        .WithMany("Ingredients")
+                        .HasForeignKey("RecipeId");
+
                     b.HasOne("ZoneDietApp.Data.Models.ProductTypeOption", "Type")
                         .WithMany()
                         .HasForeignKey("TypeId")
@@ -537,9 +569,21 @@ namespace ZoneDietApp.Data.Migrations
 
             modelBuilder.Entity("ZoneDietApp.Data.Models.RecipeProduct", b =>
                 {
-                    b.HasOne("ZoneDietApp.Data.Models.Recipe", null)
-                        .WithMany("Ingredients")
-                        .HasForeignKey("RecipeId");
+                    b.HasOne("ZoneDietApp.Data.Models.ProductTypeOption", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ZoneDietApp.Data.Models.ZoneChoiceColor", "ZoneChoiceColor")
+                        .WithMany()
+                        .HasForeignKey("ZoneChoiceColorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Type");
+
+                    b.Navigation("ZoneChoiceColor");
                 });
 
             modelBuilder.Entity("ZoneDietApp.Data.Models.Recipe", b =>

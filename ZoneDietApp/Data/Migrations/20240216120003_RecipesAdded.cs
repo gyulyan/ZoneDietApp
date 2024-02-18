@@ -4,48 +4,44 @@
 
 namespace ZoneDietApp.Data.Migrations
 {
-    public partial class AddRecipeAndRecipeProduct : Migration
+    public partial class RecipesAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 1);
-
-            migrationBuilder.DeleteData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 2);
-
-            migrationBuilder.DeleteData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 3);
-
-            migrationBuilder.DeleteData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 4);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Discriminator",
-                table: "Products",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
-
             migrationBuilder.AddColumn<int>(
                 name: "RecipeId",
                 table: "Products",
                 type: "int",
                 nullable: true);
 
-            migrationBuilder.AddColumn<int>(
-                name: "TypeQuantity",
-                table: "Products",
-                type: "int",
-                nullable: true);
+            migrationBuilder.CreateTable(
+                name: "RecipeProducts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    TypeId = table.Column<int>(type: "int", nullable: false),
+                    ZoneChoiceColorId = table.Column<int>(type: "int", nullable: false),
+                    Weight = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TypeQuantity = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RecipeProducts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RecipeProducts_ProductTypeOptions_TypeId",
+                        column: x => x.TypeId,
+                        principalTable: "ProductTypeOptions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RecipeProducts_ZoneChoiceColors_ZoneChoiceColorId",
+                        column: x => x.ZoneChoiceColorId,
+                        principalTable: "ZoneChoiceColors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateTable(
                 name: "RecipeTypes",
@@ -72,7 +68,10 @@ namespace ZoneDietApp.Data.Migrations
                     PrepTime = table.Column<int>(type: "int", nullable: false),
                     CookTime = table.Column<int>(type: "int", nullable: false),
                     TotalTime = table.Column<int>(type: "int", nullable: false),
-                    RecipeTypeId = table.Column<int>(type: "int", nullable: false)
+                    RecipeTypeId = table.Column<int>(type: "int", nullable: false),
+                    TotalCarbohydrat = table.Column<int>(type: "int", nullable: false),
+                    TotalFat = table.Column<int>(type: "int", nullable: false),
+                    TotalProtein = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -91,21 +90,20 @@ namespace ZoneDietApp.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Products",
-                columns: new[] { "Id", "Discriminator", "Name", "TypeId", "Weight", "ZoneChoiceColorId" },
-                values: new object[,]
-                {
-                    { 1, "Product", "Заешко месо", 3, "0.028", 1 },
-                    { 2, "Product", "Алабаш", 1, "0.300", 1 },
-                    { 3, "Product", "Авокадо", 2, "0.010", 1 },
-                    { 4, "Product", "Кисело мляко", 4, "0.220", 1 }
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Products_RecipeId",
                 table: "Products",
                 column: "RecipeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecipeProducts_TypeId",
+                table: "RecipeProducts",
+                column: "TypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecipeProducts_ZoneChoiceColorId",
+                table: "RecipeProducts",
+                column: "ZoneChoiceColorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Recipes_CreatorId",
@@ -132,6 +130,9 @@ namespace ZoneDietApp.Data.Migrations
                 table: "Products");
 
             migrationBuilder.DropTable(
+                name: "RecipeProducts");
+
+            migrationBuilder.DropTable(
                 name: "Recipes");
 
             migrationBuilder.DropTable(
@@ -142,15 +143,7 @@ namespace ZoneDietApp.Data.Migrations
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "Discriminator",
-                table: "Products");
-
-            migrationBuilder.DropColumn(
                 name: "RecipeId",
-                table: "Products");
-
-            migrationBuilder.DropColumn(
-                name: "TypeQuantity",
                 table: "Products");
         }
     }
