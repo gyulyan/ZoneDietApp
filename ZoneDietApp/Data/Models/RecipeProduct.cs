@@ -21,15 +21,16 @@ namespace ZoneDietApp.Data.Models
         [ForeignKey(nameof(TypeId))]
         public ProductTypeOption Type { get; set; } = null!;
 
-        [Required]
-        public int ZoneChoiceColorId { get; set; }
+        //[Required]
+        //public int ZoneChoiceColorId { get; set; }
 
-        [Required]
-        [ForeignKey(nameof(ZoneChoiceColorId))]
-        public ZoneChoiceColor ZoneChoiceColor { get; set; } = null!;
+        //[Required]
+        //[ForeignKey(nameof(ZoneChoiceColorId))]
+        //public ZoneChoiceColor ZoneChoiceColor { get; set; } = null!;
 
         [Required]
         public string Weight { get; set; }
+
         [Required]
         public int TypeQuantity { get; set; }
 

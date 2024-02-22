@@ -18,7 +18,7 @@
                 <p class="mb-0"><span class="fw-bold">Type: </span>@recipe.RecipeType.Name</p>
             </div>
 
-            <a asp-controller="Recipe" asp-action="Index" asp-route-id="@recipe.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">View Details</a>
+            <a asp-controller="Recipe" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">View Details</a>
             @if (User.Identity.Name == recipe.Creator)
             {
                 <a asp-controller="Recipe" asp-action="Index" asp-route-id="@recipe.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit</a>

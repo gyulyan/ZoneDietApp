@@ -17,6 +17,9 @@ namespace ZoneDietApp.Models
         public string Description { get; set; } = null!;
 
         [Required(ErrorMessage = RequireErrorMessage)]
+        public int TypeId { get; set; }
+
+        [Required(ErrorMessage = RequireErrorMessage)]
         public IEnumerable<RecipeTypeViewModel> RecipeType { get; set; } = new List<RecipeTypeViewModel>();
 
 
@@ -30,7 +33,7 @@ namespace ZoneDietApp.Models
         [Required(ErrorMessage = RequireErrorMessage)]
         public int TotalProtein { get; set; }
 
-        public IFormFile Pfp { get; set; } = null!;
+        //public IFormFile? Photo { get; set; } = null!;
 
         [Range(0, 240)]
         public int PrepTime { get; set; }
@@ -39,12 +42,13 @@ namespace ZoneDietApp.Models
         public int CookTime { get; set; }
 
         [Range(0, 240)]
-        public int TotalTime { get; set; }
+        //public int? TotalTime { get; set; }
 
         [Required]
         public List<RecipeProduct> Ingredients { get; set; } = new List<RecipeProduct>();
 
-        [Required]
-        public int TypeId { get; set; }
+        public IEnumerable<ProductTypeOption> ProductTypeOptions { get; set; } = new List<ProductTypeOption>();
+
+
     }
 }

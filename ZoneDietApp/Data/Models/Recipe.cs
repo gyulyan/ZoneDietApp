@@ -36,7 +36,7 @@ namespace ZoneDietApp.Data.Models
         public int TotalTime { get; set; }
 
         [Required]
-        public IEnumerable<Product> Ingredients { get; set; } = new List<Product>();
+        public List<RecipeProduct> Ingredients { get; set; } = new List<RecipeProduct>();
 
         [Required]
         public int RecipeTypeId { get; set; }
