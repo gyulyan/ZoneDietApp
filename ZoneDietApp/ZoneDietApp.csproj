@@ -8,6 +8,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\.sass-cache\9dcd260a98b05df5e2bbaebb993f2e918e16ad1d\style.scssc" />
+    <None Include="wwwroot\.sass-cache\9dcd260a98b05df5e2bbaebb993f2e918e16ad1d\_fonts.scssc" />
+    <None Include="wwwroot\.sass-cache\9dcd260a98b05df5e2bbaebb993f2e918e16ad1d\_mixin.scssc" />
+    <None Include="wwwroot\.sass-cache\9dcd260a98b05df5e2bbaebb993f2e918e16ad1d\_responsive.scssc" />
+    <None Include="wwwroot\.sass-cache\9dcd260a98b05df5e2bbaebb993f2e918e16ad1d\_theme_color.scssc" />
+    <None Include="wwwroot\.sass-cache\b687762b7660b1f71ae40e600add14c590cfdbc7\style.scssc" />
+    <None Include="wwwroot\.sass-cache\b687762b7660b1f71ae40e600add14c590cfdbc7\_mixin.scssc" />
+    <None Include="wwwroot\.sass-cache\b687762b7660b1f71ae40e600add14c590cfdbc7\_responsive.scssc" />
+    <None Include="wwwroot\.sass-cache\b687762b7660b1f71ae40e600add14c590cfdbc7\_theme_color.scssc" />
+    <None Include="wwwroot\.sass-cache\b687762b7660b1f71ae40e600add14c590cfdbc7\_variables.scssc" />
+    <None Include="wwwroot\.sass-cache\cd34cfe2239c57be653ecbef896fb3750f9e6f5b\style.scssc" />
+    <None Include="wwwroot\.sass-cache\cd34cfe2239c57be653ecbef896fb3750f9e6f5b\_fonts.scssc" />
+    <None Include="wwwroot\.sass-cache\cd34cfe2239c57be653ecbef896fb3750f9e6f5b\_mixin.scssc" />
+    <None Include="wwwroot\.sass-cache\cd34cfe2239c57be653ecbef896fb3750f9e6f5b\_responsive.scssc" />
+    <None Include="wwwroot\.sass-cache\cd34cfe2239c57be653ecbef896fb3750f9e6f5b\_theme_color.scssc" />
+    <None Include="wwwroot\.sass-cache\cd34cfe2239c57be653ecbef896fb3750f9e6f5b\_variables.scssc" />
+    <None Include="wwwroot\.sass-cache\eb65a9acf275cb72706472a84a7409ec6f3ac36a\style.scssc" />
+    <None Include="wwwroot\.sass-cache\eb65a9acf275cb72706472a84a7409ec6f3ac36a\_mixin.scssc" />
+    <None Include="wwwroot\.sass-cache\eb65a9acf275cb72706472a84a7409ec6f3ac36a\_responsive.scssc" />
+    <None Include="wwwroot\.sass-cache\eb65a9acf275cb72706472a84a7409ec6f3ac36a\_theme_color.scssc" />
+    <None Include="wwwroot\.sass-cache\eb65a9acf275cb72706472a84a7409ec6f3ac36a\_variables.scssc" />
+    <None Include="wwwroot\img\bg-img\vegetables.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.25" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.25" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.25" />

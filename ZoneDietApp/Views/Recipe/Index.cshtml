@@ -1,38 +1,87 @@
 ﻿@model IEnumerable<AllRecipesViewModel>
 
 @{
-    ViewBag.Title = "All Recipes";
+	ViewBag.Title = "All Recipes";
 }
 
 
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-<div class="text-center row">
-    @foreach (var recipe in Model)
-    {
-        <div class="card col-4" style="width: 20rem; ">
-            <div class="card-body">
-                <h5 class="card-title mt-1">@recipe.Name</h5>
-                <p class="mb-0"><span class="fw-bold">Total time: </span>@recipe.TotalTime</p>
-                <p class="mb-0"><span class="fw-bold">Type: </span>@recipe.RecipeType.Name</p>
-            </div>
+<!-- Receipe Post Search -->
+<div class="receipe-post-search mb-80">
+	<div class="container">
+		<form action="@Url.Action("Index", "Recipe")" method="get">
+			<div class="row">
+				<div class="col-12 col-lg-4">
+					<select name="select1" id="select1">
+						<option value="">All Receipies Categories</option>
+						@foreach (var option in ViewBag.RecipeTypeOptions)
+						{
+							<option value="@option.Id">@option.Name</option>
+						}
+					</select>
+				</div>
+				<div class="col-12 col-lg-6">
+					<input type="search" name="search" placeholder="Search Receipies">
+				</div>
+				<div class="col-12 col-lg-2 text-right">
+					<button type="submit" class="btn delicious-btn">Search</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
 
-            <a asp-controller="Recipe" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">View Details</a>
-            @if (User.Identity.Name == recipe.Creator)
-            {
-                <a asp-controller="Recipe" asp-action="Index" asp-route-id="@recipe.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit</a>
-            }
-            else
-            {
-                <form class="input-group-sm " asp-controller="Recipe" asp-action="Index" asp-route-id="@recipe.Id">
-                    <input type="submit" value="Join the Event" class="fs-6 btn btn-warning mb-3 w-100 p-3 fw-bold" />
-                </form>
-            }
-        </div>
-    }
+@if (User.Identity.IsAuthenticated)
+{
+<div class="row">
+	<div class="col-12 text-center">
+		<a class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms" asp-area="" asp-controller="Recipe" asp-action="Add">Добави нова рецепта</a>
+	</div>
+</div>
+}
+
+<!-- Receipe Slider -->
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<div class="receipe-slider owl-carousel">
+				<div>
+					<img src="img/bg-img/bg5.jpg" alt="">
+				</div>
+				<div>
+					<img src="img/bg-img/bg5.jpg" alt="">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	@foreach (var recipe in Model)
+	{
+		<!-- Single Best Receipe Area -->
+		<div class="col-12 col-sm-6 col-lg-4">
+			<div class="single-best-receipe-area mb-30">
+				<img src="img/bg-img/r1.jpg" alt="">
+				<div class="receipe-content">
+					<a href="@Url.Action("Details", "Recipe", new { id = recipe.Id })">
+						<h5>@recipe.Name</h5>
+						<h>@recipe.TotalProtein БП @recipe.TotalCarbohydrat БВ @recipe.TotalFat БМ</h>
+					</a>
+
+					@if (User.Identity.Name == recipe.Creator)
+					{
+						<a asp-controller="Recipe" asp-action="Index" asp-route-id="@recipe.Id" class="btn btn-light btn-sm mb-2 w-100 p-3 fw-bold text-dark">Редактирай</a>
+					}
+				</div>
+			</div>
+		</div>
+	}
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+	<partial name="_ValidationScriptsPartial" />
 }

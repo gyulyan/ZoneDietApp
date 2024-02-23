@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using System.Security.Claims;
@@ -17,26 +19,42 @@ namespace ZoneDietApp.Controllers
             this.dbContext = dbContext;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? select1, string search)
         {
+            var recipesQuery = dbContext.Recipes
+                .AsNoTracking()
+                .Select(x => new AllRecipesViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    TotalTime = x.TotalTime,
+                    RecipeType = x.RecipeType,
+                    Creator = x.Creator.UserName,
+                    TotalCarbohydrat = x.TotalCarbohydrat,
+                    TotalFat = x.TotalFat,
+                    TotalProtein = x.TotalProtein
+                });
 
-            var model = await dbContext.Recipes
-                    .AsNoTracking()
-                    .Select(x => new AllRecipesViewModel()
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        TotalTime = x.TotalTime,
-                        RecipeType = x.RecipeType,
-                        Creator = x.Creator.UserName,
-                        TotalCarbohydrat = x.TotalCarbohydrat,
-                        TotalFat = x.TotalFat,
-                        TotalProtein = x.TotalProtein                  
-                    })
-                    .ToListAsync();
+            if (select1.HasValue)
+            {
+                recipesQuery = recipesQuery.Where(r => r.RecipeType.Id == select1.Value);
+            }
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                recipesQuery = recipesQuery.Where(r => r.Name.Contains(search));
+            }
+
+            var model = await recipesQuery.ToListAsync();
+
+            // Запазваме опциите в ViewBag, за да можем да ги използваме в Index.cshtml
+            ViewBag.RecipeTypeOptions = await dbContext.RecipeTypes
+                .AsNoTracking()
+                .ToListAsync();
 
             return View(model);
         }
+
         public async Task<IEnumerable<RecipeTypeViewModel>> GetTypes()
         {
             return await dbContext.RecipeTypes
@@ -103,32 +121,38 @@ namespace ZoneDietApp.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var model = await dbContext.Recipes
-                .Where(x => x.Id == id)
-                .AsNoTracking()
-                .Select(x => new DetailsRecipeViewModel()
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Description = x.Description,
-                    PrepTime = x.PrepTime,
-                    CookTime = x.CookTime,
-                    TotalTime = x.TotalTime,
-                    RecipeType = x.RecipeType.Name,
-                    Creator = x.Creator.UserName,
-                    TotalCarbohydrat = x.TotalCarbohydrat,
-                    TotalFat = x.TotalFat,
-                    TotalProtein = x.TotalProtein
-                })
-                .FirstOrDefaultAsync();
+            var recipe = await dbContext.Recipes
+                   .Include(r => r.Ingredients)
+                   .ThenInclude(i => i.Type)
+                      .Include(r => r.RecipeType)
+                         .Include(r => r.Creator)
+                     .FirstOrDefaultAsync(r => r.Id == id);
 
-            if (model == null)
+            if (recipe == null)
             {
-                return BadRequest();
+                return NotFound();
             }
+
+            var model = new DetailsRecipeViewModel
+            {
+                Id = recipe.Id,
+                Name = recipe.Name,
+                Description = recipe.Description,
+                PrepTime = recipe.PrepTime,
+                CookTime = recipe.CookTime,
+                TotalTime = recipe.TotalTime,
+                RecipeType = recipe.RecipeType.Name,
+                Creator = recipe.Creator.UserName,
+                TotalCarbohydrat = recipe.TotalCarbohydrat,
+                TotalFat = recipe.TotalFat,
+                TotalProtein = recipe.TotalProtein,
+                Ingredients = recipe.Ingredients
+            };
 
             return View(model);
         }
+
+       
     }
 }
 

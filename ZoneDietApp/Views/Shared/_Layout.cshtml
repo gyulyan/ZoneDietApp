@@ -1,56 +1,143 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ZoneDietApp</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/ZoneDietApp.styles.css" asp-append-version="true" />
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>@ViewData["Title"] - ZoneDietApp</title>
+	<link rel="icon" href="img/core-img/favicon.ico">
+	<link rel="stylesheet" href="~/style.css">
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ZoneDietApp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Таблица с продукти</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Recipe" asp-action="Index">Рецептурник</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+	@*         <!-- Preloader -->
+	<div id="preloader">
+	<i class="circle-preloader"></i>
+	<img src="img/core-img/salad.png" alt="">
+	</div> *@
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - ZoneDietApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+	<!-- Search Wrapper -->
+	<div class="search-wrapper">
+		<!-- Close Btn -->
+		<div class="close-btn"><i class="fa fa-times" aria-hidden="true"></i></div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<form action="#" method="post">
+						<input type="search" name="search" placeholder="Type any keywords...">
+						<button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ##### Header Area Start ##### -->
+	<header class="header-area">
+
+		<!-- Top Header Area -->
+		<div class="top-header-area">
+			<div class="container h-100">
+				<div class="row h-100 align-items-center justify-content-between">
+					<!-- Breaking News -->
+					<div class="col-12 col-sm-6">
+						<div class="breaking-news">
+							<div id="breakingNewsTicker" class="ticker">
+								<ul>
+									<li><a href="#">Добре дошли в Зоната!</a></li>
+									<li><a href="#">Готов ли си за промяната?</a></li>
+									<li><a href="#">Потърсене най-подходящата за вас рецепта</a></li>
+									<li><a href="#">Кажи здравей на твоето ново Аз!</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Navbar Area -->
+		<div class="delicious-main-menu">
+			<div class="classy-nav-container breakpoint-off">
+				<div class="container">
+					<!-- Menu -->
+					<nav class="classy-navbar justify-content-between" id="deliciousNav">
+
+						<!-- Logo -->
+						<a class="nav-brand" href="index.html"><img src="img/core-img/logo2.png" alt=""></a>
+
+						<!-- Navbar Toggler -->
+						<div class="classy-navbar-toggler">
+							<span class="navbarToggler"><span></span><span></span><span></span></span>
+						</div>
+
+						<!-- Menu -->
+						<div class="classy-menu">
+
+							<!-- close btn -->
+							<div class="classycloseIcon">
+								<div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+							</div>
+
+							<!-- Nav Start -->
+							<div class="classynav">
+								<ul>
+									<li class="active"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+									<li><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+									<li><a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Таблица с продукти</a></li>
+									<li><a class="nav-link text-dark" asp-area="" asp-controller="Recipe" asp-action="Index">Рецептурник</a></li>
+									<li><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Контакт</a></li>
+								</ul>
+							</div>
+							<div class="top-social-info text-right">
+								<partial name="_LoginPartial" />
+							</div>
+
+	</header>
+	<div class="container">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
+
+
+	<!-- ##### Footer Area Start ##### -->
+	<footer class="footer-area">
+		<div class="container h-100">
+			<div class="row h-100">
+				<div class="col-12 h-100 d-flex flex-wrap align-items-center justify-content-between">
+					<!-- Footer Logo -->
+					<div class="footer-logo">
+						<a href="index.html"><img src="~img/core-img/logo2.png" alt=""></a>
+					</div>
+					<!-- Copywrite -->
+					<p>
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | ZoneDietApp
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- ##### Footer Area Start ##### -->
+	<!-- ##### All Javascript Files ##### -->
+	<!-- jQuery-2.2.4 js -->
+	<script src="js/jquery/jquery-2.2.4.min.js"></script>
+	<!-- Popper js -->
+	<script src="js/bootstrap/popper.min.js"></script>
+	<!-- Bootstrap js -->
+	<script src="js/bootstrap/bootstrap.min.js"></script>
+	<!-- All Plugins js -->
+	<script src="js/plugins/plugins.js"></script>
+	<!-- Active js -->
+	<script src="js/active.js"></script>
+
+	@*  <script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script> *@
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ZoneDietApp.Data.Models;
 using static ZoneDietApp.Data.DataConstants;
+using System.Collections.Generic;
 
 namespace ZoneDietApp.Models
 {
@@ -10,18 +11,13 @@ namespace ZoneDietApp.Models
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
-        
         public string Description { get; set; } = null!;
-
-        //public int TypeId { get; set; }
 
         public string RecipeType = null!;
 
         public string Creator = null!;
         public int TotalCarbohydrat { get; set; }
-
         public int TotalFat { get; set; }
-
         public int TotalProtein { get; set; }
 
         //public IFormFile? Photo { get; set; } = null!;
@@ -33,9 +29,6 @@ namespace ZoneDietApp.Models
         public int TotalTime { get; set; }
 
         public List<RecipeProduct> Ingredients { get; set; } = new List<RecipeProduct>();
-
-       // public IEnumerable<ProductTypeOption> ProductTypeOptions { get; set; } = new List<ProductTypeOption>();
-
 
     }
 }

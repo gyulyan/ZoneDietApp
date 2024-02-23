@@ -1,7 +1,7 @@
 ﻿@model AddRecipeViewModel
 
 @{
-    ViewData["Title"] = "Add Recipe";
+    ViewData["Title"] = "Добави твоя рецепта";
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -13,12 +13,7 @@
         <span asp-validation-for="@Model.Name" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="@Model.Description" class="form-label-add-edit">Начин на приготвяне</label>
-        <textarea asp-for="@Model.Description" class="form-control" aria-required="true" rows="5"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="@Model.TypeId" class="form-label-add-edit">Избери вид</label>
+        <label asp-for="@Model.TypeId" class="form-label-add-edit">Избери вид на ястието</label>
         <select asp-for="@Model.TypeId" class="form-control" aria-required="true">
             @foreach (var type in Model.RecipeType)
             {
@@ -26,21 +21,6 @@
             }
         </select>
         <span asp-validation-for="@Model.TypeId" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="@Model.TotalCarbohydrat" class="form-label-add-edit">Общ брой блокове Въглехидрат:</label>
-        <textarea asp-for="@Model.TotalCarbohydrat" class="form-control" aria-required="true" rows="1"></textarea>
-        <span asp-validation-for="TotalCarbohydrat" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="@Model.TotalFat" class="form-label-add-edit">Общ брой блокове Мазнини:</label>
-        <textarea asp-for="@Model.TotalFat" class="form-control" aria-required="true" rows="1"></textarea>
-        <span asp-validation-for="TotalFat" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="@Model.TotalProtein" class="form-label-add-edit">Общ брой блокове Протеин:</label>
-        <textarea asp-for="@Model.TotalProtein" class="form-control" aria-required="true" rows="1"></textarea>
-        <span asp-validation-for="TotalProtein" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="@Model.PrepTime" class="form-label-add-edit">Време за приготвяне:</label>
@@ -52,7 +32,7 @@
         <textarea asp-for="@Model.CookTime" class="form-control" aria-required="true" rows="1"></textarea>
         <span asp-validation-for="CookTime" class="text-danger"></span>
     </div>
-    <h3>Ingredients:</h3>
+    <h3>Продукти:</h3>
     <div id="ingredientInputs">
         @for (var i = 0; i < Model.Ingredients.Count(); i++)
         {
@@ -84,18 +64,40 @@
                     <input asp-for="Ingredients[i].TypeQuantity" class="form-control" />
                     <span asp-validation-for="Ingredients[i].TypeQuantity" class="text-danger"></span>
                 </div>
-
-                <!-- Бутон за запазване на съставката -->
-                <button type="button" class="btn btn-primary save-ingredient">Save Ingredient</button>
             </div>
         }
     </div>
 
-    <button type="button" id="addIngredientBtn" class="btn btn-success">Add Ingredient</button>
-    <div class="mb-3">
-        <input class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Add" />
-    </div>
+    <button type="button" id="addIngredientBtn" class="btn btn-success">Добави нов продукт</button>
+
 </form>
+<div class="mb-3">
+    <label asp-for="@Model.TotalCarbohydrat" class="form-label-add-edit">Общ брой блокове ВЪГЛЕХИДРАТ:</label>
+    <textarea asp-for="@Model.TotalCarbohydrat" class="form-control" aria-required="true" rows="1"></textarea>
+    <span asp-validation-for="TotalCarbohydrat" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="@Model.TotalFat" class="form-label-add-edit">Общ брой блокове МАЗНИНИ:</label>
+    <textarea asp-for="@Model.TotalFat" class="form-control" aria-required="true" rows="1"></textarea>
+    <span asp-validation-for="TotalFat" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="@Model.TotalProtein" class="form-label-add-edit">Общ брой блокове ПРОТЕИН:</label>
+    <textarea asp-for="@Model.TotalProtein" class="form-control" aria-required="true" rows="1"></textarea>
+    <span asp-validation-for="TotalProtein" class="text-danger"></span>
+</div>
+    <div class="mb-3">
+        <label asp-for="@Model.Description" class="form-label-add-edit">Начин на приготвяне</label>
+        <textarea asp-for="@Model.Description" class="form-control" aria-required="true" rows="5"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+<div class="mb-3">
+    <input class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Add" />
+</div>
+   
+
+    
 
 @section Scripts {
     <script>
@@ -127,22 +129,13 @@
                                 <div class="form-group">
                                     <label for="Ingredients_${index}__TypeQuantity">Quantity:</label>
                                     <input type="text" id="Ingredients_${index}__TypeQuantity" name="Ingredients[${index}].TypeQuantity" class="form-control" />
-                                </div>
-                                <button type="button" class="btn btn-primary save-ingredient">Save Ingredient</button>
+                                </div
                             </div>
                         `;
 
                 var ingredientDiv = document.createElement('div');
                 ingredientDiv.innerHTML = ingredientHtml;
                 ingredientInputs.appendChild(ingredientDiv);
-            });
-
-            // Event listener for dynamically added "Save Ingredient" buttons
-            ingredientInputs.addEventListener('click', function (event) {
-                if (event.target.classList.contains('save-ingredient')) {
-                    // Implement the logic to save the ingredient here
-                    console.log('Ingredient saved');
-                }
             });
         });
     </script>

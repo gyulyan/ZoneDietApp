@@ -2,83 +2,73 @@
     ViewData["Title"] = "Home Page";
 }
 
-@* <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div> *@
 
+<!-- ##### Breadcumb Area Start ##### -->
+<div class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/vegetables.jpg);">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="breadcumb-text text-center">
+                    <h2>За Зоната</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Breadcumb Area End ##### -->
+<!-- ##### About Area Start ##### -->
+<section class="about-area section-padding-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading">
+                    <h3>Какво означава да се храниш зонирано?</h3>
+                </div>
+            </div>
+        </div>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .tabs {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: space-around;
-            background-color: #f0f0f0;
-        }
-        .tabs li {
-            padding: 10px 20px;
-            border-bottom: 2px solid transparent;
-            cursor: pointer;
-        }
-        .tabs li:hover {
-            border-bottom: 2px solid #007bff;
-        }
-        .content {
-            display: none;
-            padding: 20px;
-        }
-        .content.active {
-            display: block;
-        }
-    </style>
+        <div class="row">
+            <div class="col-12">
+                <h6 class="sub-heading pb-5">
+                    Зоната е начин на хранене, описан в книгата „Зоната“ на  д-р Бари Сиърс от 1995 г. Тя не е точно диета, въпреки че се спазват грамажи и си има свои правила. В зоната няма забранени храни, има благоприятни и неблагоприятни като вие избирате с какво да се храните. Основното правило е съчетаването на всяко хранене на протеини, въглехидрати и мазнини в равно съотношение. Всъщност ние така или иначе го правим, защото се храним смесено напр. закусваме филийка хляб с масло и сирене, готвим смесено като в ястията почти винаги присъстват зеленчуци, някакво месо и мазнини. И това не е само при нас, целият свят готви храната си като смесва протеини (месо, риба, яйца, сирене, мляко), въглехидрати (зеленчуци,зърнени и бобови храни, плодове) и мазнини (олиа, масла, ядки). Каква е разликата?
+                    Смисълът на Зоната е по-дълбок. 
+                </h6>
 
-<body>
-    <ul class="tabs">
-        <li onclick="showContent('home')">Начало</li>
-        <li onclick="showContent('zone')">Какво е "Зоната"</li>
-        <li onclick="showContent('daily')">Калкулатор за дневен прием</li>
-        <li onclick="showContent('label')">Калкулатор за смятане по етикет</li>
-        <li onclick="showContent('products')">Таблица с продукти</li>
-        <li onclick="showContent('recipes')">Рецепти</li>
-    </ul>
+                <div class="row">
+                    <div class="col-12">
+                        <img class="mb-70" src="img/bg-img/breadcumb4.jpg" alt="">
+                        <p class="text-center">
+                            Зоната е система за поддържане на хормоналния баланс чрез храненето. Името й идва от това, че съществува „зона“, в която хормоните са в идеалния си баланс, те не са твърде ниски или твърде високи. Тогава тялото ни се радва на здраве, имаме повече енергия и добро настроение.
+                            Това се постига чрез хранене. Бари Сиърс ни предлага да си представим храната като лекарство, което трябва да се взима в определени дози, за да има лечебен ефект. Нали разбирате, че ако ви предпишат лекарство няма да го изпиете наведнъж, за да оздравеете. Той препоръчва 5 хранения за деня и идеята е често и по малко. Не се притеснявайте ще имате достатъчно храна и няма да усетите глад. Напротив това ще ви осигури сили и енергия за целия ден
+                        </p>
+                    </div>
+                </div>
 
-    <div id="home" class="content active">
-        <h2>Добре дошли на началната страница</h2>
-        <!-- Content for "Начало" tab goes here -->
-    </div>
-    <div id="zone" class="content">
-        <h2>Какво е "Зоната"</h2>
-        <!-- Content for "Какво е 'Зоната'" tab goes here -->
-    </div>
-    <div id="daily" class="content">
-        <h2>Калкулатор за дневен прием</h2>
-        <!-- Content for "Калкулатор за дневен прием" tab goes here -->
-    </div>
-    <div id="label" class="content">
-        <h2>Калкулатор за смятане по етикет</h2>
-        <!-- Content for "Калкулатор за смятане по етикет" tab goes here -->
-    </div>
-    <div id="products" class="content">
-        <h2>Таблица с продукти</h2>
-        <!-- Content for "Таблица с продукти" tab goes here -->
-    </div>
-    <div id="recipes" class="content">
-        <h2>Рецепти</h2>
-        <!-- Content for "Рецепти" tab goes here -->
-    </div>
+                <p class="text-center">
+                    <h6 class="sub-heading pb-5">Какво да очаквате:</h6>
 
-    <script>
-        function showContent(tabId) {
-            const contents = document.querySelectorAll('.content');
-            contents.forEach(content => {
-                content.classList.remove('active');
-            });
-            document.getElementById(tabId).classList.add('active');
-        }
-    </script>
-</body>
+                    <ul class="text-center">
+                        <li>Ще се храните със здравословна храна и ще се грижите по-добре за себе си.</li>
+                        <li>Ще отслабнете, ако имате нужда от това. Постепенно тялото ви ще регулира само теглото си без да ограничавате храната си.</li>
+                        <li>Ще спре „изкуствения“ глад за сладко.</li>
+                        <li>Ще се чувствате бодри, енергични и концентрирани.</li>
+                        <li>Ще се наспивате по-бързо и ще се събуждате отпочинали и готови за новия ден.</li>
+                        <li>Ще се радвате на добро здраве.</li>
+                        <li>Ще имате добро настроение и ще се чувствате по-спокойни.</li>
+                   </ul>     
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <img class="mb-70" src="img/bg-img/breadcumb3.jpg" alt="">
+                <p class="text-center">Зоната може успешно да се практикува от всяка възрастова група като с възрастта нуждата ни от полезни вещества нараства, за да се чувстваме добре и да имаме повече енергия. Храната е основното гориво, което нашето тяло използва. Тя може да ни разболее, но може и да ни излекува. Никога не е късно за ново начало.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
