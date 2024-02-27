@@ -29,6 +29,7 @@ namespace ZoneDietApp.Models
         public int TotalTime { get; set; }
 
         public List<RecipeProduct> Ingredients { get; set; } = new List<RecipeProduct>();
+        public List<CommentViewModel> Comments { get; set; } = new List<CommentViewModel>();
 
     }
 }

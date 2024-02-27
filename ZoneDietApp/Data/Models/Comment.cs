@@ -1,24 +1,32 @@
 ﻿using Microsoft.Extensions.Hosting;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ZoneDietApp.Data.Models
 {
 	public class Comment
 	{
+		[Key]
 		public int Id { get; set; }
+
 		[Required(ErrorMessage = "Please Enter Name")]
-		public string Name { get; set; }
+		public string Name { get; set; } = null!;
+
+		[Required(ErrorMessage = "Please Enter Subject")]
+		public string Subject { get; set; } = null!;
 
 		[Required]
-		[RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,6}$", ErrorMessage = "Please provide Valid email")]
-		public string Email { get; set; }
+		public string Message { get; set; } = null!;
 
 		[Required]
-		public string Message { get; set; }
-
 		public string dateTime { get; set; } = DateTime.Now.ToString();
 
-		public int PostId { get; set; }
-		public Recipe Recipe { get; set; }
+		[Required]
+		public int RecipeId { get; set; }
+
+		[Required]
+		[ForeignKey(nameof(RecipeId))]
+		public Recipe Recipe { get; set; } = null!;
 	}
 }

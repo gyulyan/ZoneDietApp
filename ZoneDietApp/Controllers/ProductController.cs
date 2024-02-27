@@ -28,8 +28,6 @@ namespace ZoneDietApp.Controllers
         [HttpPost]
         public IActionResult Index(ProductIndexViewModel viewModel)
         {
-            
-
             if (ModelState.IsValid)
             {
                 viewModel.Products = dbContext.Products

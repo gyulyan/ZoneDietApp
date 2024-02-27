@@ -74,7 +74,7 @@
 
 					@if (User.Identity.Name == recipe.Creator)
 					{
-						<a asp-controller="Recipe" asp-action="Index" asp-route-id="@recipe.Id" class="btn btn-light btn-sm mb-2 w-100 p-3 fw-bold text-dark">Редактирай</a>
+						<a asp-controller="Recipe" asp-action="Edit" asp-route-id="@recipe.Id" class="btn btn-light btn-sm mb-2 w-100 p-3 fw-bold text-dark">Редактирай</a>
 					}
 				</div>
 			</div>

@@ -60,6 +60,7 @@ namespace ZoneDietApp.Data.Models
         [Required]
         public DateTime CreatedOn { get; set; }
 
-		// public IEnumerable<Comment> Comments { get; set; }
+		public List<Comment>? Comments { get; set; } = new List<Comment>();
+		
 	}
 }

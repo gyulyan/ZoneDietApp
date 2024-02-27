@@ -41,13 +41,10 @@ namespace ZoneDietApp.Models
         [Range(0, 240)]
         public int CookTime { get; set; }
 
-        [Range(0, 240)]
-        //public int? TotalTime { get; set; }
-
         [Required]
         public List<RecipeProduct> Ingredients { get; set; } = new List<RecipeProduct>();
 
-        public IEnumerable<ProductTypeOption> ProductTypeOptions { get; set; } = new List<ProductTypeOption>();
+        public IEnumerable<ProductTypeViewModel> ProductTypeOptions { get; set; } = new List<ProductTypeViewModel>();
 
 
     }

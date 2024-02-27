@@ -111,5 +111,7 @@ namespace ZoneDietApp.Data
 
         public DbSet<RecipeType> RecipeTypes { get; set; }
 
-    }
+		public DbSet<Comment> RecipeComments { get; set; }
+
+	}
 }

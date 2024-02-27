@@ -32,18 +32,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-12 col-md-4">
-                            <div class="receipe-ratings text-right my-5">
-                                <div class="ratings">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="row">
@@ -70,6 +58,35 @@
                             </div>
                         </div>
 
+                    <!-- Comments -->
+                    <div class="col-12 col-lg-12">
+                        <div class="ingredients">
+                            <h4>Коментари</h4>
+
+                            @if (Model.Comments.Count < 1)
+                            {
+                                <p>Все още няма коментари за тази рецепта.</p>
+                            }
+                            else
+                            {
+                                @foreach (var comment in Model.Comments)
+                                {
+                                    <div class="row">
+                                        <div class="col-12 col-md-8">
+                                            <div class="receipe-headline my-5">
+                                                <div class="receipe-duration">
+                                                    <h6>Публикувано от: @comment.Name</h6>
+                                                    <h6>Заглавие: @comment.Subject</h6>
+                                                    <h6>Коментар: @comment.Message</h6>
+                                                    <h6>Дата: @comment.DateTime</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }                           
+                        </div>
+                    </div>
                     </div>
 
                     <div class="row">
@@ -83,22 +100,25 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="contact-form-area">
-                                <form action="#" method="post">
-                                    <div class="row">
-                                        <div class="col-12 col-lg-6">
-                                            <input type="text" class="form-control" id="name" placeholder="Name">
-                                        </div>
-                                        <div class="col-12 col-lg-6">
-                                            <input type="email" class="form-control" id="email" placeholder="E-mail">
-                                        </div>
-                                        <div class="col-12">
-                                            <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
-                                        </div>
-                                        <div class="col-12">
-                                            <button class="btn delicious-btn mt-30" type="submit">Post Comments</button>
-                                        </div>
+                            <form action="@Url.Action("PostComment", "Recipe")" method="post">
+                                <input type="hidden" name="recipeId" value="@Model.Id" />
+                                <input type="hidden" name="recipe" value="@Model.Name" /><!-- Include the recipeId in the form data -->
+                                <div class="row">
+                                    <div class="col-12 col-lg-6">
+                                        <input type="text" class="form-control" name="name" placeholder="Name">
                                     </div>
-                                </form>
+                                    <div class="col-12 col-lg-6">
+                                        <input type="text" class="form-control" name="subject" placeholder="Subject">
+                                    </div>
+                                    <div class="col-12">
+                                        <textarea name="message" class="form-control" cols="30" rows="10" placeholder="Message"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn delicious-btn mt-30" type="submit">Post Comment</button>
+                                    </div>
+                                </div>
+                            </form>
+
                             </div>
                         </div>
                     </div>

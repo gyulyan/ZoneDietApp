@@ -2,8 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Globalization;
+using System.Net;
 using System.Security.Claims;
+using System.Xml.Linq;
 using ZoneDietApp.Data;
 using ZoneDietApp.Data.Models;
 using ZoneDietApp.Models;
@@ -55,11 +58,23 @@ namespace ZoneDietApp.Controllers
             return View(model);
         }
 
-        public async Task<IEnumerable<RecipeTypeViewModel>> GetTypes()
+        public async Task<IEnumerable<RecipeTypeViewModel>> GetRecipeTypes()
         {
             return await dbContext.RecipeTypes
                 .AsNoTracking()
                 .Select(t => new RecipeTypeViewModel
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                })
+            .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ProductTypeViewModel>> GetProductTypes()
+        {
+            return await dbContext.ProductTypeOptions
+                .AsNoTracking()
+                .Select(t => new ProductTypeViewModel
                 {
                     Id = t.Id,
                     Name = t.Name,
@@ -78,9 +93,8 @@ namespace ZoneDietApp.Controllers
         {
             var model = new AddRecipeViewModel();
 
-            model.RecipeType = await GetTypes();
-            var productTypeOptions = await dbContext.ProductTypeOptions.ToListAsync();
-            model.ProductTypeOptions = await dbContext.ProductTypeOptions.ToListAsync();
+            model.RecipeType = await GetRecipeTypes();
+            model.ProductTypeOptions = await GetProductTypes();
             return View(model);
         }
 
@@ -88,12 +102,12 @@ namespace ZoneDietApp.Controllers
         public async Task<IActionResult> Add(AddRecipeViewModel model)
         {
 
-            //if (!ModelState.IsValid)
-            //{
-            //    model.RecipeType = await GetTypes();
-            //    model.ProductTypeOptions = await dbContext.ProductTypeOptions.ToListAsync();
-            //    return View(model);
-            //}
+            if (!ModelState.IsValid)
+            {
+                model.RecipeType = await GetRecipeTypes();
+                model.ProductTypeOptions = await GetProductTypes();
+                return View(model);
+            }
 
             var recipe = new Recipe()
             {
@@ -122,7 +136,8 @@ namespace ZoneDietApp.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var recipe = await dbContext.Recipes
-                   .Include(r => r.Ingredients)
+     .Include(r => r.Comments)
+       .Include(r => r.Ingredients)
                    .ThenInclude(i => i.Type)
                       .Include(r => r.RecipeType)
                          .Include(r => r.Creator)
@@ -146,13 +161,171 @@ namespace ZoneDietApp.Controllers
                 TotalCarbohydrat = recipe.TotalCarbohydrat,
                 TotalFat = recipe.TotalFat,
                 TotalProtein = recipe.TotalProtein,
-                Ingredients = recipe.Ingredients
+                Ingredients = recipe.Ingredients,
+                Comments = recipe.Comments.Select(c => new CommentViewModel
+                {
+                    Name = c.Name,
+                    Subject = c.Subject,
+                    Message = c.Message,
+                    DateTime = c.dateTime
+                }).ToList()
             };
 
             return View(model);
         }
 
-       
+        [Authorize]
+
+        [HttpPost]
+        public async Task<IActionResult> PostComment(int recipeId, string name, string subject, string message)
+        {
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(subject) || string.IsNullOrEmpty(message))
+            {
+                // If any of the required fields are empty, handle the error appropriately
+                // You may want to display an error message to the user or handle it in another way
+                // For simplicity, we'll just return to the details view with no changes
+                return RedirectToAction("Details", new { id = recipeId });
+            }
+
+            // Find the recipe in the database
+            var recipe = await dbContext.Recipes.FindAsync(recipeId);
+
+            if (recipe == null)
+            {
+                // Handle the case where the recipe with the specified ID doesn't exist
+                return NotFound();
+            }
+
+            // Create a new Comment object with the data from the form
+            var comment = new Comment
+            {
+                Name = name,
+                Subject = subject,
+                Message = message,
+                RecipeId = recipeId, // Associate the comment with the specific recipe
+                dateTime = DateTime.Now.ToString() // Assuming you want to store the current date and time of the comment
+            };
+
+            // Add the comment to the recipe's collection of comments
+            recipe.Comments.Add(comment);
+
+            // Save changes to the database
+            await dbContext.SaveChangesAsync();
+
+            // Redirect the user back to the details page of the recipe where the comment was posted
+            return RedirectToAction("Details", new { id = recipeId });
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var recipe = await dbContext.Recipes
+                .Include(r => r.Ingredients)
+                    .ThenInclude(i => i.Type)
+                .FirstOrDefaultAsync(r => r.Id == id);
+
+            if (recipe == null)
+            {
+                return BadRequest();
+            }
+
+            if (recipe.CreatorId != GetUserId())
+            {
+                return Unauthorized();
+            }
+
+            var model = new AddRecipeViewModel()
+            {
+                Name = recipe.Name,
+                Description = recipe.Description,
+                TypeId = recipe.RecipeTypeId,
+                TotalCarbohydrat = recipe.TotalCarbohydrat,
+                TotalFat = recipe.TotalFat,
+                TotalProtein = recipe.TotalProtein,
+                PrepTime = recipe.PrepTime,
+                CookTime = recipe.CookTime,
+                Ingredients = recipe.Ingredients,
+            };
+
+            model.RecipeType = await GetRecipeTypes();
+            model.ProductTypeOptions = await GetProductTypes();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(AddRecipeViewModel model, int id)
+        {
+            var recipe = await dbContext.Recipes
+                .AsNoTracking()
+               .Include(r => r.Ingredients)
+                    .ThenInclude(i => i.Type)
+                .FirstOrDefaultAsync(r => r.Id == id);
+
+            if (recipe == null)
+            {
+                return BadRequest();
+            }
+
+            if (recipe.CreatorId != GetUserId())
+            {
+                return Unauthorized();
+            }
+
+            // Validate ProductTypeOptions entities
+            //foreach (var ingredient in model.Ingredients)
+            //{
+            //    if (ingredient.Type != null)
+            //    {
+            //        // Handle the case where the Name property of the ProductTypeOption is null
+            //        // You may want to display an error message to the user or handle it in another way
+            //        // For simplicity, we'll just return to the edit view with no changes
+            //        model.RecipeType = await GetTypes();
+            //        model.ProductTypeOptions = await dbContext.ProductTypeOptions.ToListAsync();
+            //        return View(model);
+            //    }
+            //}
+
+            // Now you can modify the recipe entity safely
+            recipe.Description = model.Description;
+            recipe.Name = model.Name;
+            recipe.RecipeTypeId = model.TypeId;
+            recipe.TotalCarbohydrat = model.TotalCarbohydrat;
+            recipe.TotalFat = model.TotalFat;
+            recipe.TotalProtein = model.TotalProtein;
+            recipe.PrepTime = model.PrepTime;
+            recipe.CookTime = model.CookTime;
+            foreach (var ingredient in model.Ingredients)
+            {
+                // Check if ingredient already exists
+                var existingIngredient = recipe.Ingredients.FirstOrDefault(i => i.Id == ingredient.Id);
+                if (existingIngredient != null)
+                {
+                    // Update existing ingredient
+                    existingIngredient.Name = ingredient.Name;
+                    existingIngredient.Weight = ingredient.Weight;
+                    existingIngredient.TypeId = ingredient.TypeId;
+                    existingIngredient.TypeQuantity = ingredient.TypeQuantity;
+                }
+                else
+                {
+                    // Add new ingredient
+                    var newIngredient = new RecipeProduct
+                    {
+                        Name = ingredient.Name,
+                        Weight = ingredient.Weight,
+                        TypeId = ingredient.TypeId,
+                        TypeQuantity = ingredient.TypeQuantity
+                    };
+                    recipe.Ingredients.Add(newIngredient);
+                }
+            }
+
+            await dbContext.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
 
