@@ -1,29 +1,40 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static ZoneDietApp.Data.DataConstants;
 
 namespace ZoneDietApp.Data.Models
 {
 	public class Comment
 	{
 		[Key]
-		public int Id { get; set; }
+        [Comment("Comment identifier")]
+        public int Id { get; set; }
 
 		[Required(ErrorMessage = "Please Enter Name")]
-		public string Name { get; set; } = null!;
+        [MaxLength(UserNameMaxLenght)]
+        [Comment("User's name")]
+        public string Name { get; set; } = null!;
 
 		[Required(ErrorMessage = "Please Enter Subject")]
-		public string Subject { get; set; } = null!;
+        [MaxLength(SubjectMaxLenght)]
+        [Comment("Subject of the comment")]
+        public string Subject { get; set; } = null!;
+
+		[Required(ErrorMessage = "Please Enter Message")]
+        [MaxLength(MessageMaxLenght)]
+        [Comment("Message of the comment")]
+        public string Message { get; set; } = null!;
 
 		[Required]
-		public string Message { get; set; } = null!;
+        [Comment("Date of publishing")]
+        public string dateTime { get; set; } = DateTime.Now.ToString();
 
 		[Required]
-		public string dateTime { get; set; } = DateTime.Now.ToString();
-
-		[Required]
-		public int RecipeId { get; set; }
+        [Comment("Recipe identifier")]
+        public int RecipeId { get; set; }
 
 		[Required]
 		[ForeignKey(nameof(RecipeId))]
