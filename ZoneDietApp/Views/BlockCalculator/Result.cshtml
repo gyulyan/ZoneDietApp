@@ -4,10 +4,36 @@
     <div class="row">
         <div class="col-12">
             <h3>Резултат:</h3>
-            <p>Мазнини: @Model.Fat</p>
-            <p>Протеин: @Model.Protein</p>
-            <p>Въглехидрати: @Model.Carbohydrat</p>
-            <p>Тегло: @Model.Weight</p>
+            @if (Model.MaxResultType != null)
+            {
+                <p>Продуктът е @GetProductBulgarianName(Model.MaxResultType)</p>
+                <p>1 блок @GetProductBulgarianName(Model.MaxResultType) от продукта е: @Math.Round(GetValue(Model.MaxResultType), 2) гр.</p>
+                <p>Общ брой блокове за @Model.Weight гр.: @Math.Round(Model.Weight / GetValue(Model.MaxResultType), 2) блока</p>
+            }
         </div>
     </div>
 </div>
+
+@functions {
+    public double GetValue(string type)
+    {
+        return type switch
+        {
+            "Carbohydrat" => Model.Carbohydrat,
+            "Fat" => Model.Fat,
+            "Protein" => Model.Protein,
+            _ => throw new ArgumentException("Invalid type"),
+        };
+    }
+
+    public string GetProductBulgarianName(string type)
+    {
+        return type switch
+        {
+            "Carbohydrat" => "ВЪГЛЕХИДРАТ",
+            "Fat" => "МАЗНИНА",
+            "Protein" => "ПРОТЕИН",
+            _ => throw new ArgumentException("Invalid type"),
+        };
+    }
+}

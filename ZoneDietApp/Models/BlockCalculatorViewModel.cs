@@ -7,5 +7,6 @@
         public string Fibеrs { get; set; } = null!;
         public string Protein { get; set; } = null!;
         public string Weight { get; set; } = null!;
+
     }
 }
