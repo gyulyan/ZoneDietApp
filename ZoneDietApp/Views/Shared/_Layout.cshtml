@@ -46,13 +46,16 @@
 						<div class="breaking-news">
 							<div id="breakingNewsTicker" class="ticker">
 								<ul>
-									<li><a href="#">Добре дошли в Зоната!</a></li>
-									<li><a href="#">Готов ли си за промяната?</a></li>
-									<li><a href="#">Потърсене най-подходящата за вас рецепта</a></li>
-									<li><a href="#">Кажи здравей на твоето ново Аз!</a></li>
+									<li><a href="@Url.Action("Index", "Home")">Добре дошли в Зоната!</a></li>
+									<li><a href="@Url.Action("Index", "Home")">Готов ли си за промяната?</a></li>
+									<li><a href="@Url.Action("Index", "Recipe")">Потърсене най-подходящата за вас рецепта</a></li>
+									<li><a href="@Url.Action("Contact", "Home")">Кажи здравей на твоето ново Аз!</a></li>
 								</ul>
 							</div>
 						</div>
+					</div>
+					<div class="top-social-info text-right">
+						<partial name="_LoginPartial" />
 					</div>
 				</div>
 			</div>
@@ -66,7 +69,7 @@
 					<nav class="classy-navbar justify-content-between" id="deliciousNav">
 
 						<!-- Logo -->
-						<a class="nav-brand" href="index.html"><img src="../../../img/core-img/logo2.png" alt=""></a>
+						<a class="nav-brand" href="@Url.Action("Index", "Home")"><img src="../../../img/core-img/logo2.png" alt=""></a>
 
 						<!-- Navbar Toggler -->
 						<div class="classy-navbar-toggler">
@@ -91,9 +94,7 @@
 									<li><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Контакт</a></li>
 								</ul>
 							</div>
-							<div class="top-social-info text-right">
-								<partial name="_LoginPartial" />
-							</div>
+
 
 	</header>
 	<div class="container">
@@ -110,7 +111,7 @@
 				<div class="col-12 h-100 d-flex flex-wrap align-items-center justify-content-between">
 					<!-- Footer Logo -->
 					<div class="footer-logo">
-						<a href="index.html"><img src="../../../img/core-img/logo2.png" alt=""></a>
+						<a href="@Url.Action("Index", "Home")"><img src="../../../img/core-img/logo2.png" alt=""></a>
 					</div>
 					<!-- Copywrite -->
 					<p>
