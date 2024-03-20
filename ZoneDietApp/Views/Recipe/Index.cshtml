@@ -9,7 +9,7 @@
 <hr />
 
 <!-- Receipe Post Search -->
-<div class="receipe-post-search mb-80">
+<div class="receipe-post-search mb-40">
 	<div class="container">
 		<form action="@Url.Action("Index", "Recipe")" method="get">
 			<div class="row">
@@ -33,31 +33,80 @@
 	</div>
 </div>
 
+<br />
+
 @if (User.Identity.IsAuthenticated)
 {
-<div class="row">
-	<div class="col-12 text-center">
-		<a class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms" asp-area="" asp-controller="Recipe" asp-action="Add">Добави нова рецепта</a>
+	<div class="row">
+		<div class="col-12 text-center">
+			<a class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms" asp-area="" asp-controller="Recipe" asp-action="Add">Добави нова рецепта</a>
+		</div>
 	</div>
-</div>
 }
 
+<br />
 <!-- Receipe Slider -->
 <div class="container">
 	<div class="row">
 		<div class="col-12">
 			<div class="receipe-slider owl-carousel">
 				<div>
-					<img src="img/bg-img/bg5.jpg" alt="">
+					<img src="img/bg-img/breadcumb3.jpg" alt="">
 				</div>
 				<div>
-					<img src="img/bg-img/bg5.jpg" alt="">
+					<img src="img/bg-img/breadcumb2.jpg" alt="">
+				</div>
+				<div>
+					<img src="img/bg-img/breadcumb4.jpg" alt="">
+				</div>
+				<div>
+					<img src="img/bg-img/breadcumb1.jpg" alt="">
+				</div>
+				<div>
+					<img src="img/bg-img/breadcumb5.jpg" alt="">
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
+<!-- Receipe Carousel -->
+<section class="hero-area">
+	<div class="hero-slides owl-carousel">
+		<!-- Single Hero Slide -->
+		<div class="single-hero-slide bg-img" style="background-image: url(img/bg-img/breadcumb3.jpg);">
+			<div class="container h-100">
+				<div class="row h-100 align-items-center">
+					<div class="col-12 col-md-9 col-lg-7 col-xl-6">
+						<div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
+							<h2 data-animation="fadeInUp" data-delay="300ms">Закуски</h2>
+							<p data-animation="fadeInUp" data-delay="700ms">Разгледайте вкусните предложения за закуски</p>
+							<a href="https://localhost:7153/Recipe?select1=1&search=" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Виж тук</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Single Hero Slide -->
+		<div class="single-hero-slide bg-img" style="background-image: url(img/bg-img/bg6.jpg);">
+			<div class="container h-100">
+				<div class="row h-100 align-items-center">
+					<div class="col-12 col-md-9 col-lg-7 col-xl-6">
+						<div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
+							<h2 data-animation="fadeInUp" data-delay="300ms">Delicios Homemade Burger</h2>
+							<p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tristique nisl vitae luctus sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu varius.</p>
+							<a href="#" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">See Receipe</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Receipe Carousel -->
+
+<br />
 
 <div class="row">
 	@foreach (var recipe in Model)
