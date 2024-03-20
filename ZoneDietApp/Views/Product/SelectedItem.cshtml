@@ -1,84 +1,136 @@
 ﻿@model ProductIndexViewModel
 
 @{
-    ViewData["Title"] = "Selected Product";
+	ViewData["Title"] = "Резултат от търсенето";
 }
 
-<h1>Selected Product</h1>
-
-@using (Html.BeginForm("SelectedItem", "Product", FormMethod.Get))
-{
-    <div class="form-group">
-        <label for="productName">Product Name:</label>
-        <input type="text" id="productName" name="selectedProductName" class="form-control" required autocomplete="on" list="productList">
-        <datalist id="productList">
-            @foreach (var product in Model.AllProducts)
-            {
-                <option value="@product.Name"></option>
-            }
-        </datalist>
-    </div>
-    <button type="submit" class="btn btn-primary">Search</button>
-    <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("Index", "Product")'">Clear</button>
-}
 @if (Model.Products != null && Model.Products.Any())
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Weight</th>
-                <th>ZoneChoiceColor</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var product in Model.Products)
-            {
-                <tr>
-                    <td>@product.Name</td>
-                    <td>@product.Type.Name</td>
-                    <td>@product.Weight</td>
-                    <td>@product.ZoneChoiceColor.Name</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+	<div class="receipe-content-area">
+		<div class="container">
+
+			<div class="row">
+				<div class="col-12 col-md-8">
+					<div class="receipe-headline my-5">
+						@foreach (var product in Model.Products)
+						{
+							<h2>@product.Name</h2>
+							<div class="receipe-duration">
+								<h6>Вид: @product.Type.Name</h6>
+								<h6>Грамаж: @product.Weight</h6>
+								<h6>Цвят Зона: @product.ZoneChoiceColor.Name </h6>
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 }
 else
 {
-    <p>No product found.</p>
+	<div class="receipe-content-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 col-md-8">
+					<div class="receipe-headline my-5">
+						<h2>Няма открити продукти</h2>
+						<div class="receipe-duration">
+							<h6>Моля изберете продукт от таблицата</h6>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 }
+<div class="breadcumb-area bg-img bg-overlay" style="background-image: url(../../../img/bg-img/healty.jpg);">
+	<div class="container h-100">
+		<div class="row h-100 align-items-center">
+			<div class="col-12">
+				<div class="breadcumb-text text-center">
+					<h2>Не знаеш колко блока е даден продукт?</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<br />
+
+@using (Html.BeginForm("SelectedItem", "Product", FormMethod.Get))
+{
+	<div class="form-group">
+
+		<div class="row">
+			<div class="col-4 text-right">
+				<label for="productName"><h5>Потърси друг продукт от таблицата:</h5></label>
+			</div>
+
+			<div class="col-8 text-right">
+				<input type="text" id="productName" name="selectedProductName" class="form-control" required autocomplete="on" list="productList">
+				<datalist id="productList">
+					@foreach (var product in Model.Products)
+					{
+						<option value="@product.Name"></option>
+					}
+				</datalist>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-6 text-right">
+			<button class="btn delicious-btn" type="submit">Търси</button>
+		</div>
+		<div class="col-6 text-left">
+			<button class="btn delicious-btn" type="button" onclick="window.location.href='@Url.Action("Index", "Product")'">Изчисти</button>
+		</div>
+	</div>
+}
+<br />
 
 <hr />
 
-<h1>Всички продукти в базата данни</h1>
+<div class="breadcumb-area bg-img bg-overlay" style="background-image: url(../../../img/bg-img/r6.jpg);">
+	<div class="container h-100">
+		<div class="row h-100 align-items-center">
+			<div class="col-12">
+				<div class="breadcumb-text text-center">
+					<h2>Таблица с всички продукти</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<br />
 
 @if (Model.AllProducts != null && Model.AllProducts.Any())
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Weight</th>
-                <th>ZoneChoiceColor</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var product in Model.AllProducts)
-            {
-                <tr>
-                    <td>@product.Name</td>
-                    <td>@product.Type.Name</td>
-                    <td>@product.Weight</td>
-                    <td>@product.ZoneChoiceColor.Name</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Име</th>
+				<th>Вид</th>
+				<th>Грамаж</th>
+				<th>Цвят Зона</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var product in Model.AllProducts)
+			{
+				<tr>
+					<td>@product.Name</td>
+					<td>@product.Type.Name</td>
+					<td>@product.Weight</td>
+					<td>@product.ZoneChoiceColor.Name</td>
+				</tr>
+			}
+		</tbody>
+	</table>
 }
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+	<partial name="_ValidationScriptsPartial" />
 }

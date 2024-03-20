@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<AllRecipesViewModel>
 
 @{
-	ViewBag.Title = "All Recipes";
+	ViewBag.Title = "Рецепти по зоната";
 }
 
 
@@ -15,7 +15,7 @@
 			<div class="row">
 				<div class="col-12 col-lg-4">
 					<select name="select1" id="select1">
-						<option value="">All Receipies Categories</option>
+						<option value="">Избери категория</option>
 						@foreach (var option in ViewBag.RecipeTypeOptions)
 						{
 							<option value="@option.Id">@option.Name</option>
@@ -23,7 +23,7 @@
 					</select>
 				</div>
 				<div class="col-12 col-lg-6">
-					<input type="search" name="search" placeholder="Search Receipies">
+					<input type="search" name="search" placeholder="Търси по ключова дума">
 				</div>
 				<div class="col-12 col-lg-2 text-right">
 					<button type="submit" class="btn delicious-btn">Search</button>
