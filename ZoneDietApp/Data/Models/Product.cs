@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static ZoneDietApp.Data.DataConstants;
 
@@ -28,6 +29,8 @@ namespace ZoneDietApp.Data.Models
 		public ZoneChoiceColor ZoneChoiceColor { get; set; } = null!;
 
 		[Required]
-		public string Weight { get; set; }
+		[Comment("Weight of the product")]
+		[Column(TypeName = "decimal(18,2)")]
+		public decimal Weight { get; set; } 
     }
 }

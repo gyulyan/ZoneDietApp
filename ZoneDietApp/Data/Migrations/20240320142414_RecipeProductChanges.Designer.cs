@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZoneDietApp.Data;
 
@@ -11,9 +12,10 @@ using ZoneDietApp.Data;
 namespace ZoneDietApp.Data.Migrations
 {
     [DbContext(typeof(ZoneDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240320142414_RecipeProductChanges")]
+    partial class RecipeProductChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -283,9 +285,9 @@ namespace ZoneDietApp.Data.Migrations
                     b.Property<int>("TypeId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Weight")
-                        .HasColumnType("decimal(18,2)")
-                        .HasComment("Weight of the product");
+                    b.Property<string>("Weight")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ZoneChoiceColorId")
                         .HasColumnType("int");
@@ -304,7 +306,7 @@ namespace ZoneDietApp.Data.Migrations
                             Id = 1,
                             Name = "Заешко месо",
                             TypeId = 3,
-                            Weight = 0.028m,
+                            Weight = "0.028",
                             ZoneChoiceColorId = 1
                         },
                         new
@@ -312,7 +314,7 @@ namespace ZoneDietApp.Data.Migrations
                             Id = 2,
                             Name = "Алабаш",
                             TypeId = 1,
-                            Weight = 0.300m,
+                            Weight = "0.300",
                             ZoneChoiceColorId = 1
                         },
                         new
@@ -320,7 +322,7 @@ namespace ZoneDietApp.Data.Migrations
                             Id = 3,
                             Name = "Авокадо",
                             TypeId = 2,
-                            Weight = 0.010m,
+                            Weight = "0.010",
                             ZoneChoiceColorId = 1
                         },
                         new
@@ -328,7 +330,7 @@ namespace ZoneDietApp.Data.Migrations
                             Id = 4,
                             Name = "Кисело мляко",
                             TypeId = 4,
-                            Weight = 0.220m,
+                            Weight = "0.220",
                             ZoneChoiceColorId = 1
                         });
                 });
@@ -392,8 +394,8 @@ namespace ZoneDietApp.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -446,13 +448,12 @@ namespace ZoneDietApp.Data.Migrations
                     b.Property<int>("RecipeProductTypeId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("TypeQuantity")
-                        .HasColumnType("decimal(18,2)")
-                        .HasComment("Weight of the product");
+                    b.Property<int>("TypeQuantity")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("Weight")
-                        .HasColumnType("decimal(18,2)")
-                        .HasComment("Weight of the product");
+                    b.Property<string>("Weight")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

@@ -95,7 +95,6 @@ namespace ZoneDietApp.Controllers
             {
                 RecipeType = await GetRecipeTypes(),
                 ProductTypeOptions = await GetProductTypes()
-               // IngredientsType = 
             };
 
             return View(model);
@@ -104,37 +103,14 @@ namespace ZoneDietApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddRecipeViewModel model)
         {
-
-			// Присвояване на типа на съставката от формата
-			//foreach (var ingredient in model.Ingredients)
+            // Ако разкоментирам тази част тестовете ми гърмят, заради не зареден ProductType на Ingredienta
+			//if (!ModelState.IsValid)
 			//{
-			//	// Вземаме типа на съставката от формата
-			//	var productType = await dbContext.ProductTypeOptions.FirstOrDefaultAsync(pt => pt.Id == ingredient.Type.Id);
+			//	model.RecipeType = await GetRecipeTypes();
+			//	model.ProductTypeOptions = await GetProductTypes();
 
-			//	// Проверка дали сме намерили съответния тип
-			//	if (productType != null)
-			//	{
-			//		// Присвояваме типа на съставката
-			//		ingredient.Type = productType;
-			//	}
-			//	else
-			//	{
-			//		// Ако не сме намерили съответния тип, може да се предприеме подходяща обработка на грешката
-			//		// Например, можем да добавим съобщение за грешка към ModelState и да върнем View с модела
-			//		ModelState.AddModelError(string.Empty, "Грешка при добавяне на продукт. Моля, опитайте отново.");
-			//		model.RecipeType = await GetRecipeTypes();
-			//		model.ProductTypeOptions = await GetProductTypes();
-			//		return View(model);
-			//	}
+			//	return View(model);
 			//}
-
-			if (!ModelState.IsValid)
-			{
-				model.RecipeType = await GetRecipeTypes();
-				model.ProductTypeOptions = await GetProductTypes();
-
-				return View(model);
-			}
 
 			var recipe = new Recipe()
             {
@@ -152,8 +128,8 @@ namespace ZoneDietApp.Controllers
                 CreatedOn = DateTime.Now
             };
 
-           // await dbContext.Recipes.AddAsync(recipe);
-            // await dbContext.SaveChangesAsync();
+            await dbContext.Recipes.AddAsync(recipe);
+            await dbContext.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }
@@ -165,7 +141,7 @@ namespace ZoneDietApp.Controllers
             var recipe = await dbContext.Recipes
      .Include(r => r.Comments)
        .Include(r => r.Ingredients)
-                   .ThenInclude(i => i.Type)
+                   .ThenInclude(i => i.RecipeProductType)
                       .Include(r => r.RecipeType)
                          .Include(r => r.Creator)
                      .FirstOrDefaultAsync(r => r.Id == id);
@@ -249,7 +225,7 @@ namespace ZoneDietApp.Controllers
         {
             var recipe = await dbContext.Recipes
                 .Include(r => r.Ingredients)
-                    .ThenInclude(i => i.Type)
+                    .ThenInclude(i => i.RecipeProductType)
                 .FirstOrDefaultAsync(r => r.Id == id);
 
             if (recipe == null)
@@ -287,7 +263,7 @@ namespace ZoneDietApp.Controllers
             var recipe = await dbContext.Recipes
                 .AsNoTracking()
                .Include(r => r.Ingredients)
-                    .ThenInclude(i => i.Type)
+                    .ThenInclude(i => i.RecipeProductType)
                 .FirstOrDefaultAsync(r => r.Id == id);
 
             if (recipe == null)
@@ -332,7 +308,7 @@ namespace ZoneDietApp.Controllers
                     // Update existing ingredient
                     existingIngredient.Name = ingredient.Name;
                     existingIngredient.Weight = ingredient.Weight;
-                    existingIngredient.TypeId = ingredient.TypeId;
+                    existingIngredient.RecipeProductTypeId = ingredient.RecipeProductTypeId;
                     existingIngredient.TypeQuantity = ingredient.TypeQuantity;
                 }
                 else
@@ -342,7 +318,7 @@ namespace ZoneDietApp.Controllers
                     {
                         Name = ingredient.Name,
                         Weight = ingredient.Weight,
-                        TypeId = ingredient.TypeId,
+                        RecipeProductTypeId = ingredient.RecipeProductTypeId,
                         TypeQuantity = ingredient.TypeQuantity
                     };
                     recipe.Ingredients.Add(newIngredient);

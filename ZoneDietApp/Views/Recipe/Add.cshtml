@@ -53,14 +53,14 @@
 					<span asp-validation-for="Ingredients[i].Type.Id" class="text-danger"></span>
 				</div> *@
 				<div class="form-group">
-					<label asp-for="Ingredients[i].TypeId" class="form-label-add-edit">Type</label>
-					<select asp-for="Ingredients[i].TypeId" class="form-control" aria-required="true">
+					<label asp-for="Ingredients[i].RecipeProductTypeId" class="form-label-add-edit">Type</label>
+					<select asp-for="Ingredients[i].RecipeProductTypeId" class="form-control" aria-required="true">
 						@foreach (var type in Model.ProductTypeOptions)
 						{
 							<option value="@type.Id">@type.Name</option>
 						}
 					</select>
-					<span asp-validation-for="Ingredients[i].TypeId" class="text-danger"></span>
+					<span asp-validation-for="Ingredients[i].RecipeProductTypeId" class="text-danger"></span>
 				</div>
 
 				<div class="form-group">

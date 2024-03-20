@@ -10,7 +10,7 @@
         public const int RecipeNameMinLenght = 3;
 
 
-        public const int RecipeDescriptionMaxLenght = 50;
+        public const int RecipeDescriptionMaxLenght = 500;
         public const int RecipeDescriptionMinLenght = 3;
 
         public const string RequireErrorMessage = "The field {0} is required!";

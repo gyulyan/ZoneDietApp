@@ -1,132 +1,142 @@
 ﻿@model DetailsRecipeViewModel
 
 @{
-        <!-- ##### Breadcumb Area Start ##### -->
-        <div class="breadcumb-area bg-img bg-overlay" style="background-image: url(../../../img/bg-img/breadcumb3.jpg);">
-            <div class="container h-100">
-                <div class="row h-100 align-items-center">
-                    <div class="col-12">
-                        <div class="breadcumb-text text-center">
-                            <h2>Recipe</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- ##### Breadcumb Area End ##### -->
+	<!-- ##### Breadcumb Area Start ##### -->
+	<div class="breadcumb-area bg-img bg-overlay" style="background-image: url(../../../img/bg-img/breadcumb3.jpg);">
+		<div class="container h-100">
+			<div class="row h-100 align-items-center">
+				<div class="col-12">
+					<div class="breadcumb-text text-center">
+						<h2>Рецепта</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- ##### Breadcumb Area End ##### -->
 
-        <div class="receipe-post-area section-padding-80">
-            <!-- Receipe Content Area -->
-            <div class="receipe-content-area">
-                <div class="container">
+	<div class="receipe-post-area section-padding-80">
+		<!-- Receipe Content Area -->
+		<div class="receipe-content-area">
+			<div class="container">
 
-                    <div class="row">
-                        <div class="col-12 col-md-8">
-                            <div class="receipe-headline my-5">
-                                <h2>@Model.Name</h2>
-                                <div class="receipe-duration">
-                                    <h6>Време за приготвяне: @Model.PrepTime mins</h6>
-                                    <h6>Време за готвене: @Model.CookTime mins</h6>
-                                    <h6>Общо време: @Model.TotalTime mins</h6>
-                                    <h6>Общ брой блокове: @Model.TotalProtein Протеин @Model.TotalCarbohydrat Въглехидрат @Model.TotalFat Мазнини </h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+				<div class="row">
+					<div class="col-12 col-md-8">
+						<div class="receipe-headline my-5">
+							<h2>@Model.Name</h2>
+							<div class="receipe-duration">
+								<h6>Време за приготвяне: @Model.PrepTime мин</h6>
+								<h6>Време за готвене: @Model.CookTime мин</h6>
+								<h6>Общо време: @Model.TotalTime мин</h6>
+								<br/>
+								<h6>Общ брой блокове:</h6>
+								<h7>Протеин: @Model.TotalProtein</h7>
+								<br />
+								<h7>Въглехидрат: @Model.TotalCarbohydrat</h7>
+								<br />
+								<h7>Мазнини: @Model.TotalFat </h7>
+							</div>
+						</div>
+					</div>
 
-                    <div class="row">
-                        <div class="col-12 col-lg-8">
-                            <!-- Single Preparation Step -->
-                        <h4>Начин на приготвяне:</h4>
-                            <div class="single-preparation-step d-flex">
-                                <p>@Model.Description</p>
-                            </div>
-                        </div>
+					<div class="col-12 col-md-4">
+						<div class="receipe-headline my-5">
+							<img src="../../../img/bg-img/r1.jpg" alt="">
+						</div>
+					</div>
+				</div>
 
-                        <!-- Ingredients -->
-                        <div class="col-12 col-lg-4">
-                            <div class="ingredients">
-                                <h4>Необходими продукти</h4>
+				<div class="row">
+					<div class="col-12 col-lg-8">
+						<!-- Single Preparation Step -->
+						<h4>Начин на приготвяне:</h4>	
+							<p>@Model.Description</p>
+					</div>
 
-                            @foreach (var ingredient in Model.Ingredients)
-                            {
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck@(ingredient.Id)">
-                                    <label class="custom-control-label" for="customCheck@(ingredient.Id)">@ingredient.Name - @ingredient.Weight гр. - @ingredient.TypeQuantity Блок @ingredient.Type.Name</label>
-                                </div>
-                            }
-                            </div>
-                        </div>
+					<!-- Ingredients -->
+					<div class="col-12 col-lg-4">
+						<div class="ingredients">
+							<h4>Необходими продукти</h4>
 
-                    <!-- Comments -->
-                    <div class="col-12 col-lg-12">
-                        <div class="ingredients">
-                            <h4>Коментари</h4>
+							@foreach (var ingredient in Model.Ingredients)
+							{
+								<div class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input" id="customCheck@(ingredient.Id)">
+									<label class="custom-control-label" for="customCheck@(ingredient.Id)">@ingredient.Name - @ingredient.Weight гр. - @ingredient.TypeQuantity Блок @ingredient.RecipeProductType.Name</label>
+								</div>
+							}
+						</div>
+					</div>
 
-                            @if (Model.Comments.Count < 1)
-                            {
-                                <p>Все още няма коментари за тази рецепта.</p>
-                            }
-                            else
-                            {
-                                @foreach (var comment in Model.Comments)
-                                {
-                                    <div class="row">
-                                        <div class="col-12 col-md-8">
-                                            <div class="receipe-headline my-5">
-                                                <div class="receipe-duration">
-                                                    <h6>Публикувано от: @comment.Name</h6>
-                                                    <h6>Заглавие: @comment.Subject</h6>
-                                                    <h6>Коментар: @comment.Message</h6>
-                                                    <h6>Дата: @comment.DateTime</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            }                           
-                        </div>
-                    </div>
-                    </div>
+					<!-- Comments -->
+					<div class="col-12 col-lg-12">
+						<div class="ingredients">
+							<h4>Коментари</h4>
 
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="section-heading text-left">
-                                <h3>Leave a comment</h3>
-                            </div>
-                        </div>
-                    </div>
+							@if (Model.Comments.Count < 1)
+							{
+								<p>Все още няма коментари за тази рецепта.</p>
+							}
+							else
+							{
+								@foreach (var comment in Model.Comments)
+								{
+									<div class="row">
+										<div class="col-12 col-md-8">
+											<div class="receipe-headline my-5">
+												<div class="receipe-duration">
+													<h6>Публикувано от: @comment.Name</h6>
+													<h6>Заглавие: @comment.Subject</h6>
+													<h6>Коментар: @comment.Message</h6>
+													<h6>Дата: @comment.DateTime</h6>
+												</div>
+											</div>
+										</div>
+									</div>
+								}
+							}
+						</div>
+					</div>
+				</div>
 
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="contact-form-area">
-                            <form action="@Url.Action("PostComment", "Recipe")" method="post">
-                                <input type="hidden" name="recipeId" value="@Model.Id" />
-                                <input type="hidden" name="recipe" value="@Model.Name" /><!-- Include the recipeId in the form data -->
-                                <div class="row">
-                                    <div class="col-12 col-lg-6">
-                                        <input type="text" class="form-control" name="name" placeholder="Name">
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        <input type="text" class="form-control" name="subject" placeholder="Subject">
-                                    </div>
-                                    <div class="col-12">
-                                        <textarea name="message" class="form-control" cols="30" rows="10" placeholder="Message"></textarea>
-                                    </div>
-                                    <div class="col-12">
-                                        <button class="btn delicious-btn mt-30" type="submit">Post Comment</button>
-                                    </div>
-                                </div>
-                            </form>
+				<div class="row">
+					<div class="col-12">
+						<div class="section-heading text-left">
+							<h3>Остави коментар</h3>
+						</div>
+					</div>
+				</div>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+				<div class="row">
+					<div class="col-12">
+						<div class="contact-form-area">
+							<form action="@Url.Action("PostComment", "Recipe")" method="post">
+								<input type="hidden" name="recipeId" value="@Model.Id" />
+								<input type="hidden" name="recipe" value="@Model.Name" /><!-- Include the recipeId in the form data -->
+								<div class="row">
+									<div class="col-12 col-lg-6">
+										<input type="text" class="form-control" name="name" placeholder="Име">
+									</div>
+									<div class="col-12 col-lg-6">
+										<input type="text" class="form-control" name="subject" placeholder="Заглавие">
+									</div>
+									<div class="col-12">
+										<textarea name="message" class="form-control" cols="30" rows="10" placeholder="Коментар"></textarea>
+									</div>
+									<div class="col-12">
+										<button class="btn delicious-btn mt-30" type="submit">Публикувай</button>
+									</div>
+								</div>
+							</form>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 }
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+	<partial name="_ValidationScriptsPartial" />
 }
