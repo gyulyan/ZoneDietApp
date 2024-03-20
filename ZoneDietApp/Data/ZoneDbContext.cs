@@ -100,7 +100,15 @@ namespace ZoneDietApp.Data
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<ProductTypeOption> ProductTypeOptions { get; set; }
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			if (!optionsBuilder.IsConfigured)
+			{
+				optionsBuilder.UseSqlServer("your_connection_string")
+							  .EnableSensitiveDataLogging();
+			}
+		}
+		public DbSet<ProductTypeOption> ProductTypeOptions { get; set; }
         public DbSet<Product> Products { get; set; }
 
         public DbSet<ZoneChoiceColor> ZoneChoiceColors { get; set; }

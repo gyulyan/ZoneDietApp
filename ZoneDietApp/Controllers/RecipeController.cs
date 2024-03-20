@@ -91,10 +91,13 @@ namespace ZoneDietApp.Controllers
 
         public async Task<IActionResult> Add()
         {
-            var model = new AddRecipeViewModel();
+            var model = new AddRecipeViewModel()
+            {
+                RecipeType = await GetRecipeTypes(),
+                ProductTypeOptions = await GetProductTypes()
+               // IngredientsType = 
+            };
 
-            model.RecipeType = await GetRecipeTypes();
-            model.ProductTypeOptions = await GetProductTypes();
             return View(model);
         }
 
@@ -102,14 +105,38 @@ namespace ZoneDietApp.Controllers
         public async Task<IActionResult> Add(AddRecipeViewModel model)
         {
 
-            if (!ModelState.IsValid)
-            {
-                model.RecipeType = await GetRecipeTypes();
-                model.ProductTypeOptions = await GetProductTypes();
-                return View(model);
-            }
+			// Присвояване на типа на съставката от формата
+			//foreach (var ingredient in model.Ingredients)
+			//{
+			//	// Вземаме типа на съставката от формата
+			//	var productType = await dbContext.ProductTypeOptions.FirstOrDefaultAsync(pt => pt.Id == ingredient.Type.Id);
 
-            var recipe = new Recipe()
+			//	// Проверка дали сме намерили съответния тип
+			//	if (productType != null)
+			//	{
+			//		// Присвояваме типа на съставката
+			//		ingredient.Type = productType;
+			//	}
+			//	else
+			//	{
+			//		// Ако не сме намерили съответния тип, може да се предприеме подходяща обработка на грешката
+			//		// Например, можем да добавим съобщение за грешка към ModelState и да върнем View с модела
+			//		ModelState.AddModelError(string.Empty, "Грешка при добавяне на продукт. Моля, опитайте отново.");
+			//		model.RecipeType = await GetRecipeTypes();
+			//		model.ProductTypeOptions = await GetProductTypes();
+			//		return View(model);
+			//	}
+			//}
+
+			if (!ModelState.IsValid)
+			{
+				model.RecipeType = await GetRecipeTypes();
+				model.ProductTypeOptions = await GetProductTypes();
+
+				return View(model);
+			}
+
+			var recipe = new Recipe()
             {
                 Name = model.Name,
                 Description = model.Description,
@@ -125,8 +152,8 @@ namespace ZoneDietApp.Controllers
                 CreatedOn = DateTime.Now
             };
 
-            await dbContext.Recipes.AddAsync(recipe);
-            await dbContext.SaveChangesAsync();
+           // await dbContext.Recipes.AddAsync(recipe);
+            // await dbContext.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }
