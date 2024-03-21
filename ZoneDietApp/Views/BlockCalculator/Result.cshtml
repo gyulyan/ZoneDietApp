@@ -6,9 +6,17 @@
 			<h3>Резултат:</h3>
 			@if (Model.MaxResultType != null)
 			{
-				<p>Продуктът е @GetProductBulgarianName(Model.MaxResultType)</p>
-				<p>1 блок @GetProductBulgarianName(Model.MaxResultType) от продукта е: @Math.Round(GetValue(Model.MaxResultType), 2) гр.</p>
-				<p>Общ брой блокове за @Model.Weight гр.: @Math.Round(Model.Weight / GetValue(Model.MaxResultType), 2) блока</p>
+				<div class="row">
+					<div class="col-12 col-md-8">
+						<div class="receipe-headline my-5">
+							<div class="receipe-duration">
+								<h6>Продуктът е @GetProductBulgarianName(Model.MaxResultType)</h6>
+								<h6>1 блок @GetProductBulgarianName(Model.MaxResultType) от продукта е: @Math.Round(GetValue(Model.MaxResultType), 2) гр.</h6>
+								<h6>Общ брой блокове за @Model.Weight гр.: @Math.Round(Model.Weight / GetValue(Model.MaxResultType), 2) блока</h6>
+							</div>
+						</div>
+					</div>
+				</div>
 			}
 		</div>
 	</div>
