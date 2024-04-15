@@ -46,6 +46,5 @@ namespace ZoneDietApp.Models
 
         public IEnumerable<ProductTypeViewModel> ProductTypeOptions { get; set; } = new List<ProductTypeViewModel>();
 
-
-    }
+	}
 }
