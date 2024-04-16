@@ -1,15 +1,20 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ZoneDietApp.Contracts;
 using ZoneDietApp.Data;
+using ZoneDietApp.Data.Common;
 using ZoneDietApp.ModelBinders;
+using ZoneDietApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ZoneDbContext>(options =>
 	options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
@@ -25,19 +30,24 @@ builder.Services.AddControllersWithViews(options =>
     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
 });
 
+builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddScoped<IStatisticService, StatisticService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-	app.UseMigrationsEndPoint();
+  //  app.UseDeveloperExceptionPage();
+    app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
+    app.UseMigrationsEndPoint();
 }
 else
 {
-	app.UseExceptionHandler("/Error");
-	//app.UseStatusCodePagesWithReExecute("/Error", "?statusCode={0}");
-	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-	app.UseHsts();
+    app.UseExceptionHandler("/Home/Error/500");
+    app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
+   // app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
+    app.UseHsts();
 }
 
 app.UseStatusCodePages();

@@ -147,7 +147,7 @@ namespace ZoneDietApp.Controllers
 
             if (recipe == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
             var model = new DetailsRecipeViewModel
