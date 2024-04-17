@@ -30,7 +30,7 @@ namespace ZoneDietApp.Data.Models
 
 		[Required]
         [Comment("Date of publishing")]
-        public string dateTime { get; set; } = DateTime.Now.ToString();
+        public string DateTime { get; set; } = System.DateTime.Now.ToString();
 
 		[Required]
         [Comment("Recipe identifier")]

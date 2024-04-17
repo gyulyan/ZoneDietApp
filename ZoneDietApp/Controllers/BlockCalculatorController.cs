@@ -16,27 +16,37 @@ namespace ZoneDietApp.Controllers
         [HttpPost]
         public IActionResult Index(BlockCalculatorViewModel model)
         {
-            var result = new BlockCalculatorResult();
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+
+			var result = new BlockCalculatorResult();
 
             decimal maxResult = Math.Max(Math.Max(model.Carbohydrat, model.Fat), model.Protein);
 
-            if (maxResult == model.Carbohydrat)
+            if (maxResult == model.Carbohydrat && model.Carbohydrat != 0)
             {
                 result.Carbohydrat = 900 / (model.Carbohydrat - model.Fibеrs);
                 result.MaxResultType = "Carbohydrat";
             }
-            else if (maxResult == result.Fat)
-            {
+            else if (maxResult == result.Fat && model.Fat != 0)
+			{
                 result.Fat = 150 / model.Fat;
                 result.MaxResultType = "Fat";
             }
-            else
-            {
-                result.Protein = 700 / model.Protein;
-                result.MaxResultType = "Protein";
-            }
+			else if (maxResult == model.Protein && model.Protein != 0)
+			{
+				result.Protein = 700 / model.Protein;
+				result.MaxResultType = "Protein";
+			}
+			else
+			{
+				ModelState.AddModelError("", "Please enter valid values for Carbohydrat, Fat, and Protein.");
+				return View(model);
+			}
 
-            result.Weight = model.Weight;
+			result.Weight = model.Weight;
             result.MaxResult = maxResult;
 
             return View("Result", result);

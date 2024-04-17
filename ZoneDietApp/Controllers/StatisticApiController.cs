@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ZoneDietApp.Contracts;
 
 namespace ZoneDietApp.Controllers
 {
-    [Route("api/statistic")]
+	[Route("api/statistic")]
     [ApiController]
     public class StatisticApiController : ControllerBase
     {

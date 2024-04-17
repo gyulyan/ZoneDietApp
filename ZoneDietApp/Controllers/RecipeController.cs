@@ -1,19 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Globalization;
-using System.Net;
 using System.Security.Claims;
-using System.Xml.Linq;
 using ZoneDietApp.Data;
 using ZoneDietApp.Data.Models;
 using ZoneDietApp.Models;
 
 namespace ZoneDietApp.Controllers
 {
-    public class RecipeController : Controller
+	public class RecipeController : Controller
     {
         private readonly ZoneDbContext dbContext;
 
@@ -169,7 +164,7 @@ namespace ZoneDietApp.Controllers
                     Name = c.Name,
                     Subject = c.Subject,
                     Message = c.Message,
-                    DateTime = c.dateTime
+                    DateTime = c.DateTime
                 }).ToList()
             };
 
@@ -205,7 +200,7 @@ namespace ZoneDietApp.Controllers
                 Subject = subject,
                 Message = message,
                 RecipeId = recipeId, // Associate the comment with the specific recipe
-                dateTime = DateTime.Now.ToString() // Assuming you want to store the current date and time of the comment
+                DateTime = DateTime.Now.ToString() // Assuming you want to store the current date and time of the comment
             };
 
             // Add the comment to the recipe's collection of comments
@@ -217,7 +212,6 @@ namespace ZoneDietApp.Controllers
             // Redirect the user back to the details page of the recipe where the comment was posted
             return RedirectToAction("Details", new { id = recipeId });
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -273,7 +267,6 @@ namespace ZoneDietApp.Controllers
                 return Unauthorized();
             }
 
-           
             recipe.Description = model.Description;
             recipe.Name = model.Name;
             recipe.RecipeTypeId = model.TypeId;
@@ -283,28 +276,6 @@ namespace ZoneDietApp.Controllers
             recipe.PrepTime = model.PrepTime;
             recipe.CookTime = model.CookTime;
             recipe.Ingredients = model.Ingredients;
-
-            //foreach (var ingredient in model.Ingredients)
-            //{
-            //    // Check if ingredient already exists
-            //    var existingIngredient = recipe.Ingredients.FirstOrDefault(i => i.Id == ingredient.Id);
-            //    if (existingIngredient != null)
-            //    {
-            //        // Update existing ingredient
-            //        existingIngredient.Name = ingredient.Name;
-            //        existingIngredient.Weight = ingredient.Weight;
-            //    }
-            //    else
-            //    {
-            //        // Add new ingredient
-            //        var newIngredient = new RecipeProduct
-            //        {
-            //            Name = ingredient.Name,
-            //            Weight = ingredient.Weight,
-            //        };
-            //        recipe.Ingredients.Add(newIngredient);
-            //    }
-            //}
 
             await dbContext.SaveChangesAsync();
 

@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using ZoneDietApp.Models;
 
 namespace ZoneDietApp.Controllers
 {
