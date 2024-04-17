@@ -15,7 +15,7 @@ namespace ZoneDietApp.Tests
 			{
 				// Arrange
 				var options = new DbContextOptionsBuilder<ZoneDbContext>()
-					.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=TestDb;Trusted_Connection=True;")
+					.UseSqlServer("Server=C-6LZCHR2\\SQLEXPRESS;Database=ZoneDietApp;Trusted_Connection=True;MultipleActiveResultSets=true")
 					.Options;
 				using (var dbContext = new ZoneDbContext(options))
 				{
