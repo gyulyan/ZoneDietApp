@@ -1,17 +1,12 @@
-﻿using NUnit.Framework;
-using Moq;
 using Microsoft.AspNetCore.Mvc;
 using ZoneDietApp.Controllers;
-using ZoneDietApp.Models;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace ZoneDietApp.Tests.Controllers
+namespace ZoneDietApp.Tests
 {
-	[TestFixture]
+
 	public class BlockCalculatorControllerTests
 	{
+
 		[Test]
 		public void Index_ReturnsViewResult()
 		{
